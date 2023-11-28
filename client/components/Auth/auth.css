@@ -1,6 +1,33 @@
+h2 {
+    color: #12223E;
+    text-align: center;
+    font-family: Outfit;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-top: 150px;
+}
+
+h3 {
+    color: #12223E;
+    text-align: center;
+    font-family: Outfit;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 3.36px;
+    text-transform: uppercase;
+    margin-top: 24px;
+    padding: 16px;
+    border-bottom: 1px solid #F4F2ED;
+    ;
+}
+
 .signup {
     display: flex;
-
 }
 
 .side-bar {
@@ -44,19 +71,24 @@
     letter-spacing: 8.4px;
     text-transform: uppercase;
     text-align: center;
+    margin-top: 80px;
 }
 
-.restaurant {
+.RESTAURANT {
     background-color: #12223E;
 }
 
-.non-profit {
+.RESTAURANT h1 {
+    color: #F4F2ED;
+}
+
+.NON-PROFIT {
     background-color: #F4F2ED;
 }
 
 .hero {
     display: flex;
-    flex-direction: row;
+    /* flex-direction: co; */
     justify-content: center;
     width: 70%;
 }
@@ -67,6 +99,34 @@
     flex-direction: column;
     align-items: left;
     justify-content: center;
+}
+
+nav {
+    position: fixed;
+    background-color: #FFF;
+    border: 1px solid #EDECE8;
+    height: 80px;
+    width: 70%;
+}
+
+nav button {
+    border: 1px solid #EDECE8;
+    background-color: #FFF;
+    height: 80px;
+    width: 180px;
+    color: #12223E;
+    font-family: Outfit;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.red {
+    color: #EA6F67;
 }
 
 .org-name {
