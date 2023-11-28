@@ -1,0 +1,121 @@
+.signup {
+    display: flex;
+
+}
+
+.side-bar {
+    width: 30%;
+    height: 1000px;
+    text-align: center;
+    padding-top: 250px;
+}
+
+.side-bar p {
+    position: fixed;
+    width: 30%;
+    color: #EA6F67;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+
+}
+
+/* .shadow {
+    position: absolute;
+    bottom: 450px;
+    left: 7px;
+    -webkit-text-fill-color: #F4F2ED;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #12223E;
+    z-index: 0;
+} */
+
+.side-bar h1 {
+    position: fixed;
+    /* left: 50px; */
+    width: 30%;
+    color: #12223E;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: 8.4px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.restaurant {
+    background-color: #12223E;
+}
+
+.non-profit {
+    background-color: #F4F2ED;
+}
+
+.hero {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 70%;
+}
+
+.hero form {
+    width: 430px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+.org-name {
+    display: flex;
+    justify-content: space-between;
+    /* gap: 70px; */
+}
+
+.org-name div {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.address {
+    display: flex;
+    justify-content: space-between;
+}
+
+.address div {
+    display: flex;
+    flex-direction: column;
+    width: 130px;
+}
+
+.state {
+    /* appearance: none; */
+    /* -webkit-appearance: none; */
+    margin-top: 8px;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #F4F2ED;
+}
+
+label {
+    margin-top: 24px;
+    color: #12223E;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.36px;
+}
+
+input {
+    margin-top: 8px;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #F4F2ED;
+}
