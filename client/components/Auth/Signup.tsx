@@ -19,9 +19,26 @@ const Signup: FC = () => {
   console.log(formData)
 
   // function to switch between categories on click
-  const handleCategory = (event: any) => { //check correct type
+  const handleCategory = (event: any) => { /// H E L P
     const newCategory = event.target.value;
     dispatch(setCategory(newCategory));
+  };
+
+  //function to handle change and update state with redux
+  const handleInputChange = (event: any) => { // H E L P
+    const { name, value } = event.target
+    if (!formData.category) {
+      dispatch(setFormData({
+        ...formData,
+        category: category,
+        [name]: value
+      }))
+    } else {
+      dispatch(setFormData({
+        ...formData,
+        [name]: value
+      }))
+    }
   };
 
   //function to handle submit
@@ -42,23 +59,7 @@ const Signup: FC = () => {
     }
   };
 
-  //function to handle change and update state with redux
-  const handleInputChange = (event: any) => {
-    const { name, value } = event.target
-    if (!formData.category) {
-      dispatch(setFormData({
-        ...formData,
-        category: category,
-        [name]: value
-      }))
-    } else {
-      dispatch(setFormData({
-        ...formData,
-        [name]: value
-      }))
-    }
 
-  };
 
   return (
     <>
@@ -138,5 +139,3 @@ const Signup: FC = () => {
 
 export default Signup;
 
-
-// category, name, username, password, street, city, state, zip, phonenumber, email
