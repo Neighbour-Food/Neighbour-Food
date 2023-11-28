@@ -32,9 +32,9 @@ h3 {
 
 .side-bar {
     width: 30%;
-    height: 1000px;
+    height: 1100px;
     text-align: center;
-    padding-top: 250px;
+    padding-top: 200px;
 }
 
 .side-bar p {
@@ -46,7 +46,6 @@ h3 {
     line-height: normal;
     letter-spacing: 2.4px;
     text-transform: uppercase;
-
 }
 
 /* .shadow {
@@ -98,7 +97,7 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: center;
+    justify-content: start;
 }
 
 nav {
@@ -153,8 +152,6 @@ nav button {
 }
 
 .state {
-    /* appearance: none; */
-    /* -webkit-appearance: none; */
     margin-top: 8px;
     padding: 18px 20px;
     border: none;

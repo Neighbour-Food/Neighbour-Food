@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
 import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
+import Sidebar from "../sidebar";
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Signup: FC = () => {
   // Var for restaurant or NPO category
   const category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
-  console.log(formData)
+  // console.log(formData)
 
   // function to switch between categories on click
   const handleCategory = (event: any) => { /// H E L P
@@ -64,11 +65,7 @@ const Signup: FC = () => {
   return (
     <>
       <div className="signup">
-        <section className={`side-bar ${category}`}>
-          <p>Welcome</p>
-          <h1>Neigbour Food</h1>
-          {/* <h1 className="shadow">Neigbour Food</h1> */}
-        </section>
+        <Sidebar />
         <section className="hero">
           {category === 'NON-PROFIT'
             ?
