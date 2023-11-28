@@ -3,13 +3,15 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 
 interface UserState {
-  isSignedIn: boolean;
-  userName: string,
+  isSignedIn: boolean,
+  category: string,
+  formData: any, // H E L P
 }
 
 const initialState: UserState = {
   isSignedIn: false,
-  userName: "Renee",
+  category: 'NON-PROFIT',
+  formData: {}
 };
 
 const userSlice = createSlice({
@@ -19,15 +21,17 @@ const userSlice = createSlice({
     changeIsSignedIn: (state) => {
       state.isSignedIn = !state.isSignedIn;
     },
-    changeUserName: (state) => {
-      state.userName = "Michael"
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.category = action.payload;
     },
-    changeNameToAction : (state, action : PayloadAction<string>) => {
-        state.userName = action.payload;
-    } 
+    setFormData: (state, action: any) => {
+      state.formData = action.payload;
+    },
   },
 });
 
-export const { changeIsSignedIn, changeUserName, changeNameToAction } = userSlice.actions;
+export const { changeIsSignedIn, setCategory, setFormData } = userSlice.actions;
 
 export default userSlice.reducer;
+
+
