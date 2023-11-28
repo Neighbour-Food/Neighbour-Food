@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
+import { setCategory, setFormData } from "../../state/user/userSlice";
 import Sidebar from "../Sidebar";
 import Produce from "../../../assets/produce"
 
@@ -18,6 +18,7 @@ const Signup: FC = () => {
   // Var for restaurant or NPO category
   const category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
+
   // console.log(formData)
 
   // function to switch between categories on click

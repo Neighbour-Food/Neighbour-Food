@@ -5,6 +5,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 interface UserState {
   isSignedIn: boolean,
   category: string,
+  orgName: string,
   // formData: {
   // name: string,
   // paswword: string
@@ -15,9 +16,10 @@ interface UserState {
 const initialState: UserState = {
   isSignedIn: false,
   category: 'NON-PROFIT',
+  orgName: "Very Good Org",
   formData: {
-    // name: '',
-    // paswword: ''
+    name: '',
+    paswword: ''
   }
 };
 
@@ -34,10 +36,13 @@ const userSlice = createSlice({
     setFormData: (state, action: any) => {
       state.formData = action.payload;
     },
+    setOrgName: (state, action: any) => {
+      state.orgName = action.payload;
+    }
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData } = userSlice.actions;
+export const { changeIsSignedIn, setCategory, setFormData, setOrgName } = userSlice.actions;
 
 export default userSlice.reducer;
 
