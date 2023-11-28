@@ -1,30 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
-
 interface UserState {
-  isSignedIn: boolean,
-  category: string,
-  orgName: string,
+  isSignedIn: boolean;
+  category: string;
+  orgName: string;
   // formData: {
   // name: string,
   // paswword: string
   // }, // H E L P
-  formData: any,
-  loginData: any,
-  address : string
+  formData: any;
+  loginData: any;
+  address: string;
 }
 
 const initialState: UserState = {
   isSignedIn: false,
-  category: 'NON-PROFIT',
+  category: "NON-PROFIT",
   orgName: "Very Good Org",
   formData: {
-    name: '',
-    paswword: ''
+    name: "",
+    paswword: "",
   },
   loginData: {},
-  address : '',
+  address: "",
 };
 
 const userSlice = createSlice({
@@ -49,11 +48,19 @@ const userSlice = createSlice({
     setAddress: (state, action: any) => {
       state.loginData = action.address;
     },
+    setOrgName: (state, action: any) => {
+      state.orgName = action.payload;
+    },
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setOrgName, setLoginData, setAddress } = userSlice.actions;
+export const {
+  changeIsSignedIn,
+  setCategory,
+  setFormData,
+  setLoginData,
+  setAddress,
+  setOrgName,
+} = userSlice.actions;
 
 export default userSlice.reducer;
-
-
