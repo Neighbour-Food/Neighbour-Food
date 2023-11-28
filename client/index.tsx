@@ -1,7 +1,11 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
-import './body.css'
-import './components/Auth/auth.css'
+import { Provider } from "react-redux";
+import { store } from "./state/store";
 
-createRoot(document.querySelector('#root')).render(<App />);
+createRoot(document.querySelector("#root")).render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);

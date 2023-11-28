@@ -13,8 +13,8 @@ const App: FC = () => {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/" element={<Signup />} />
+          {/* <Route path="/signup" element={<Signup />} /> */}
           <Route path="/login" element={<Login />} />
           <Route path="/feed" element={<Feed />} />
           <Route path="/History" element={<History />} />
