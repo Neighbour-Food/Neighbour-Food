@@ -9,7 +9,7 @@ const Sidebar: FC = () => {
 
     return (
         <>
-            <section className={`side-bar ${category}`}>
+            <section className={`side-bar ${category} ${category}-pattern`}>
                 <p>Welcome</p>
                 <h1>Neigbour Food</h1>
             </section>

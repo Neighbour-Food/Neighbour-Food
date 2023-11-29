@@ -19,7 +19,7 @@ const Main: FC = () => {
   }
   return (
     <>
-      <section className={`splash`}>
+      <section className={`splash pattern`}>
         <p>Welcome to</p>
         <h1>Neigbour <br></br>Food</h1>
         <h4>Together, let's turn surplus into support!</h4>
