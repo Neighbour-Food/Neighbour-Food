@@ -3,12 +3,25 @@ const authRouter = require('./routes/authRoutes.js');
 // const dataRoutes = require('./routes/dataRoutes.js');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require("cookie-parser");
+const bodyParser = require('body-parser');
+const path = require("path");
+const { errorHandler } = require("./middleware/errorMiddleware");
+const { Storage } = require('@google-cloud/storage');
+const crypto = require('crypto');
 const app = express();
 const PORT = 3000;
 
 dotenv.config();
 
 // ALLOWS REQUEST FROM LOCALHOST8080
+// const corsOptions = {
+//   origin: 'http://localhost:8080',
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
+
 app.use(
   cors({
     origin: 'http://localhost:8080',
@@ -16,6 +29,7 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+
 
 // HANDLE PARSE BODY
 app.use(express.json());
