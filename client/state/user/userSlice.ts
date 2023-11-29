@@ -10,7 +10,8 @@ interface UserState {
   // name: string,
   // paswword: string
   // }, // H E L P
-  formData: any
+  formData: any,
+  loginData: any
 }
 
 const initialState: UserState = {
@@ -20,7 +21,8 @@ const initialState: UserState = {
   formData: {
     name: '',
     paswword: ''
-  }
+  },
+  loginData: {},
 };
 
 const userSlice = createSlice({
@@ -39,10 +41,13 @@ const userSlice = createSlice({
     setOrgName: (state, action: any) => {
       state.orgName = action.payload;
     }
+    setLoginData: (state, action: any) => {
+      state.loginData = action.payload;
+    },
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setOrgName } = userSlice.actions;
+export const { changeIsSignedIn, setCategory, setFormData, setOrgName, setLoginData } = userSlice.actions;
 
 export default userSlice.reducer;
 
