@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Koulen&family=Outfit:wght@400;700;900&family=Rajdhani:wght@300;400;500;700&family=Source+Code+Pro:wght@500&display=swap');
+
+body {
+    font-family: Outfit, Arial, sans-serif;
+    margin: 0;
+}
+
+h2 {
+    color: #12223E;
+    text-align: center;
+    font-family: Outfit;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
+h4 {
+    color: #12223E;
+    text-align: center;
+    font-family: Outfit;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 3.36px;
+    text-transform: uppercase;
+    margin-top: 24px;
+    padding: 16px;
+}
+
+.black-button {
+    appearance: none;
+    padding: 12px;
+    margin-top: 24px;
+    width: 85px;
+    border: none;
+    border-radius: 40px;
+    background: #12223E;
+    color: #FFF;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.white-button {
+    appearance: none;
+    padding: 12px;
+    margin-top: 24px;
+    width: 85px;
+    border: none;
+    border-radius: 40px;
+    background: #FFF;
+    color: #12223E;
+    font-size: 9px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+
+nav {
+    position: fixed;
+    background-color: #FFF;
+    border-bottom: 1px solid #EDECE8;
+    height: 80px;
+    width: 70%;
+}
+
+nav button {
+    border: 1px solid #EDECE8;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    background-color: #FFF;
+    height: 80px;
+    width: 180px;
+    color: #12223E;
+    font-family: Outfit;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.splash {
+    width: 100%;
+    text-align: center;
+    padding-top: 150px;
+}
+
+.splash p {
+    width: 100%;
+    color: #EA6F67;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+}
+
+.splash h1 {
+    /* position: fixed; */
+    /* left: 50px; */
+    /* width: 30%; */
+    color: #12223E;
+    font-size: 42px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    letter-spacing: 8.4px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.splash div {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.description {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    margin-top: 130px;
+}
+
+.description div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+    height: 540px;
+    padding: 50px 50px;
+    text-align: center;
+}
+
+.description button {
+    margin-bottom: 40px;
+}
+
+.RESTAURANT h2  {
+    color: #FFF;
+}
+
+.RESTAURANT p {
+    color: #FFF;
+}
