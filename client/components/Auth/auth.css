@@ -86,12 +86,27 @@ h3 {
     background-color: #12223E;
 }
 
+.RESTAURANT-pattern {
+    background-image: url('../../../assets/Frame40white.svg');
+    background-size: cover;
+    background-repeat: repeat;
+    background-size: 105%;
+}
+
 .RESTAURANT h1 {
     color: #F4F2ED;
 }
 
 .NON-PROFIT {
+
     background-color: #F4F2ED;
+}
+
+.NON-PROFIT-pattern {
+    background-image: url('../../../assets/Frame40.svg');
+    background-size: cover;
+    background-repeat: repeat;
+    background-size: 105%;
 }
 
 .hero {
@@ -163,4 +178,5 @@ input {
     border: none;
     border-radius: 8px;
     background: #F4F2ED;
+    width: 100%;
 }

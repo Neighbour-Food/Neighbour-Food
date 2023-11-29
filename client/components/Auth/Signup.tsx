@@ -1,11 +1,20 @@
-import React, { ChangeEvent, FC, ReactHTMLElement} from "react";
+import React, { ChangeEvent, FC, ReactHTMLElement, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
 import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
+import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
+import Autocomplete from '../Autocomplete';
+
+// const YourMainComponent = () => {
+const handleLocationSelect = (latLng) => {
+  console.log('Selected Location:', latLng);
+  // Do something with the selected location, e.g., update state
+};
+// }
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
@@ -76,16 +85,16 @@ const Signup: FC = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange} />
             <h3>CONTACT INFO</h3>
-            <div className="org-name">
-              <div className="column">
-                <label htmlFor="org">Name of Org</label>
-                <input type="text" name="org" onChange={handleInputChange} />
-              </div>
-              <div>
-                <label htmlFor="contact">Contact Name</label>
-                <input type="text" name="contact" onChange={handleInputChange} />
-              </div>
-            </div>
+            {/* <div className="org-name"> */}
+            {/* <div className="column"> */}
+            <label htmlFor="org">Name of Org</label>
+            <input type="text" name="org" onChange={handleInputChange} />
+            {/* </div>
+              <div> */}
+            <label htmlFor="contact">Contact Name</label>
+            <input type="text" name="contact" onChange={handleInputChange} />
+            {/* </div> */}
+            {/* </div> */}
             <label htmlFor="email">Email</label>
             <input type="text" name="email" onChange={handleInputChange} />
             <label htmlFor="phone">Phone Number</label>
@@ -93,13 +102,14 @@ const Signup: FC = () => {
             <label htmlFor="phone">Phone Number</label>
             <input type="text" name="phone" onChange={handleInputChange} />
             <label htmlFor="street">Street Adress</label>
-            <input type="text" name="street" onChange={handleInputChange} />
-            <div className="address">
-              <div>
+            <Autocomplete onSelect={handleLocationSelect} />
+            {/* <input type="text" name="street" onChange={handleInputChange} /> */}
+            {/* <div className="address"> */}
+            {/* <div>
                 <label htmlFor="city">City</label>
-                <input type="text" name="city" onChange={handleInputChange} />
-              </div>
-              <div>
+                <input type="text" name="city" value={''} onChange={handleInputChange} />
+              </div> */}
+            {/* <div>
                 <label htmlFor="contact">State</label>
                 <select className="state" name="state" onChange={handleInputChange}>
                   {states.map((state) => <option value={state} key={state}>{state}</option>)}
@@ -107,9 +117,9 @@ const Signup: FC = () => {
               </div>
               <div>
                 <label htmlFor="zip">Zip</label>
-                <input type="text" name="zip" onChange={handleInputChange} />
-              </div>
-            </div>
+                <input type="text" name="zip" value={''} onChange={handleInputChange} />
+              </div> */}
+            {/* </div> */}
             {category === 'NON-PROFIT' &&
               <>
                 <label htmlFor="pickup">Pick Up Radius</label>
