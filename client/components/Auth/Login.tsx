@@ -69,7 +69,7 @@ const Login: FC = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange} />
             <p>Don’t have account yet? <span className="red"><a href="/signup">Sign Up</a></span></p>
-          <button className="black-button" type="submit" >LOGIN</button>
+            <button className="black-button" type="submit" >LOGIN</button>
           </form>
         </section>
       </div>
