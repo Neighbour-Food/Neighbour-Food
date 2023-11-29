@@ -5,13 +5,20 @@ import { PayloadAction } from "@reduxjs/toolkit";
 interface UserState {
   isSignedIn: boolean,
   category: string,
-  formData: any, // H E L P
+  // formData: {
+  // name: string,
+  // paswword: string
+  // }, // H E L P
+  formData: any
 }
 
 const initialState: UserState = {
   isSignedIn: false,
   category: 'NON-PROFIT',
-  formData: {}
+  formData: {
+    // name: '',
+    // paswword: ''
+  }
 };
 
 const userSlice = createSlice({

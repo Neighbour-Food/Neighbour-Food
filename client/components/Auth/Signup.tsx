@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
 import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
-import Sidebar from "../sidebar";
+import Sidebar from "../Sidebar";
+import Produce from "../../../assets/produce"
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
@@ -53,7 +54,15 @@ const Signup: FC = () => {
         formData
       });
 
-      if (request) navigate("/login")
+      if (request) {
+        if (category === 'NON_PROFIT') {
+
+        } else {
+          navigate("/login")
+        }
+      }
+      
+      
     }
     catch (err) {
       console.log('error: ', err)
@@ -65,6 +74,7 @@ const Signup: FC = () => {
   return (
     <>
       <div className="signup">
+        {/* <Produce /> */}
         <Sidebar />
         <section className="hero">
           {category === 'NON-PROFIT'

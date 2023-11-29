@@ -103,13 +103,16 @@ h3 {
 nav {
     position: fixed;
     background-color: #FFF;
-    border: 1px solid #EDECE8;
+    border-bottom: 1px solid #EDECE8;
     height: 80px;
     width: 70%;
 }
 
 nav button {
     border: 1px solid #EDECE8;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
     background-color: #FFF;
     height: 80px;
     width: 180px;
