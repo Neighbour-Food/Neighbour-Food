@@ -1,4 +1,4 @@
-h2 {
+.hero h2 {
     color: #12223E;
     text-align: center;
     font-family: Outfit;
@@ -23,7 +23,16 @@ h3 {
     margin-top: 24px;
     padding: 16px;
     border-bottom: 1px solid #F4F2ED;
-    ;
+}
+
+.hero p {
+    margin-top: 24px;
+    font-size: 12px;
+}
+
+.hero a {
+    text-decoration: none;
+    color: #EA6F67;
 }
 
 .signup {
@@ -98,34 +107,10 @@ h3 {
     flex-direction: column;
     align-items: left;
     justify-content: start;
+    overflow: hidden;
 }
 
-nav {
-    position: fixed;
-    background-color: #FFF;
-    border-bottom: 1px solid #EDECE8;
-    height: 80px;
-    width: 70%;
-}
 
-nav button {
-    border: 1px solid #EDECE8;
-    border-top: none;
-    border-bottom: none;
-    border-left: none;
-    background-color: #FFF;
-    height: 80px;
-    width: 180px;
-    color: #12223E;
-    font-family: Outfit;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 2.4px;
-    text-transform: uppercase;
-    cursor: pointer;
-}
 
 .red {
     color: #EA6F67;

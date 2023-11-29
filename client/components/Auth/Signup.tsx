@@ -1,11 +1,11 @@
-import React, { ChangeEvent, FC, ReactHTMLElement } from "react";
+import React, { ChangeEvent, FC, ReactHTMLElement} from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
 import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
 import Sidebar from "../Sidebar";
-import Produce from "../../../assets/produce"
+import Navbar from "../Navbar";
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
@@ -20,11 +20,6 @@ const Signup: FC = () => {
   const formData = useSelector((state: RootState) => state.user.formData);
   // console.log(formData)
 
-  // function to switch between categories on click
-  const handleCategory = (event: any) => { /// H E L P
-    const newCategory = event.target.value;
-    dispatch(setCategory(newCategory));
-  };
 
   //function to handle change and update state with redux
   const handleInputChange = (event: any) => { // H E L P
@@ -54,15 +49,11 @@ const Signup: FC = () => {
         formData
       });
 
-      if (request) {
-        if (category === 'NON_PROFIT') {
-
-        } else {
-          navigate("/login")
-        }
+      if (request) { // CHECK WITH BACKEND 
+        if (category === 'NON_PROFIT') navigate("/feed")
+        else navigate("/create-pickup")
       }
-      
-      
+
     }
     catch (err) {
       console.log('error: ', err)
@@ -77,18 +68,7 @@ const Signup: FC = () => {
         {/* <Produce /> */}
         <Sidebar />
         <section className="hero">
-          {category === 'NON-PROFIT'
-            ?
-            <nav>
-              <button type='button' value='NON-PROFIT' className="red" onClick={handleCategory}>NON-PROFIT</button>
-              <button type='button' value='RESTAURANT' onClick={handleCategory} >RESTAURANT</button>
-            </nav>
-            :
-            <nav>
-              <button type='button' value='NON-PROFIT' onClick={handleCategory}>NON-PROFIT</button>
-              <button type='button' value='RESTAURANT' onClick={handleCategory} className="red">RESTAURANT</button>
-            </nav>
-          }
+          <Navbar />
           <form onSubmit={handleSignUpSubmmit}>
             <h2>SIGN UP TO <br></br>NEIGHBOUR FOOD</h2>
             <label htmlFor="username">Username</label>
