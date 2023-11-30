@@ -79,12 +79,7 @@ app.post('/generate-signed-url', cors(), (req, res) => {
   };
 
   async function getBucketMetadata() {
-    /**
-     * TODO(developer): Uncomment the following lines before running the sample.
-     */
-    // The ID of your GCS bucket
-    // const bucketName = 'your-unique-bucket-name';
-  
+
     // Get Bucket Metadata
     const [metadata] = await storage.bucket('restaurantimageslogos').getMetadata();
   
