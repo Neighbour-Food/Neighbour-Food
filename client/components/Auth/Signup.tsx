@@ -54,14 +54,15 @@ const Signup: FC = () => {
 
     // POST REQUEST
     try {
-      const request = await axios.post('https://localhost:4000/signup', {
+      const request = await axios.post('http://localhost:4000/api/users/signup', {
         formData
       });
 
-      if (request) { // CHECK WITH BACKEND 
+      if (request) { // request.status === 'success' // get user id // change signedin state to true
+        console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
-      }
+      } // ELSE IS MISSING
 
     }
     catch (err) {
