@@ -1,14 +1,12 @@
-const express = require("express");
-const mealController = require("../controllers/mealController");
-
-// INITIALIZE ROUTER
+const express = require('express');
 const router = express.Router();
+const mealController = require('../controllers/mealController');
 
-// ROUTES
-router.post("/list", mealController.list); //list an order
-router.post("/claim", mealController.claim); //cliam an order
-router.post("/available", mealController.available); //see what is available 
+router.get("/meals", mealController.getMeals);
+router.get("/", mealController.getAvailableMeals);
+router.post("/meals", mealController.postMeal);
 
-router.get("/test", mealController.test);
+  
+  
 
 module.exports = router;
