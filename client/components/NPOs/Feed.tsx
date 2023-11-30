@@ -4,6 +4,7 @@ import { RootState } from "../../state/store";
 import OrdersList from "./OrdersList";
 import Sidebar from "../Sidebar";
 import NpoFeedImage from "../../../assets/npoFeedImage";
+import PersonIcon from "../../../assets/personIcon";
 import "./feed.css";
 
 const Feed: FC = () => {
