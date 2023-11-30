@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const mealController = require('../controllers/mealController');
 
-router.get("/meals", mealController.getMeals);
-router.get("/", mealController.getAvailableMeals);
-router.post("/meals", mealController.postMeal);
+router.get("/:rest_id", mealController.getMeals);
+router.get("/getAvail", mealController.getAvailableMeals);
+router.post("/postMeal", mealController.postMeal);
 
   
   
