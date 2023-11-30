@@ -4,12 +4,10 @@ const getCoordsForAddress = require('../util/location.js')
 
 exports.signup = async (req, res, next) => {
   try {
-
-    const { category, name, username, password, street, city, state, zip, phonenumber, email} = req.body; //discuss with frontend to send a category (npo or restaurant)
+    console.log(req.body)
+    const { category, name, username, password, street, city, state, zip, phonenumber, email, address} = req.body.formData;
 
     // logic to get the long and latitude (to be modularized function incase they change locations)
-    const address = street + ", " + city + ", " + state + " " + zip;
-    // will need to ensure a correct address is put in (possibly auto complete address functionality on frontend with google maps api)
     const coordsFetched = await getCoordsForAddress(address);
 
     const longitude = coordsFetched.lng;
@@ -18,18 +16,15 @@ exports.signup = async (req, res, next) => {
     let hashed;
     let queryStrCreate;
 
-    if (category == 'npos'){ //non-profit
-        const { pref_distance } = req.body; 
-
-        // should this be where we have the logic to generate the long/lat based on address?
+    if (category == 'NON-PROFIT'){ //non-profit
+        const { pref_distance } = req.body;
 
         hashed = await bcrypt.hash(password, 10);
-        // do we want to get the pref_distance at signup or set it to a default value and have htem input this later?
-        queryStrCreate = `INSERT INTO ${category} (name, username, password, street, city, state, zip, phonenumber, email, longitude, latitude,pref_distance) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}', '${zip}', '${phonenumber}', '${email}', '${longitude}', '${latitude}', '${pref_distance}');`;
+        queryStrCreate = `INSERT INTO npos (name, username, password, street, city, state, zip, phonenumber, email, longitude, latitude,pref_distance) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}', '${zip}', '${phonenumber}', '${email}', '${longitude}', '${latitude}', '${pref_distance}');`;
     } else { //restaurant
-        let { type } = req.body; 
+        // let { type } = req.body; 
         hashed = await bcrypt.hash(password, 10);
-        queryStrCreate = `INSERT INTO ${category} (name, username, password, street, city, zip, phonenumber, email, type) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}',  '${zip}', '${phonenumber}', '${email}', '${type}');`;
+        queryStrCreate = `INSERT INTO restaurant (name, username, password, street, city, zip, phonenumber, email) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}',  '${zip}', '${phonenumber}', '${email}');`;
     }
      
     await db.query(queryStrCreate);

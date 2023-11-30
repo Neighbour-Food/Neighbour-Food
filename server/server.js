@@ -5,13 +5,11 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
-const path = require("path");
-const { errorHandler } = require("./middleware/errorMiddleware");
 const { Storage } = require('@google-cloud/storage');
 const crypto = require('crypto');
 const app = express();
 const path = require('path');
-const PORT = 3000;
+const PORT = 4000;
 
 dotenv.config();
 

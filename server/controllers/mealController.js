@@ -1,18 +1,29 @@
 const db = require('../db/sqlmodel');
+const mealController = {};
 
-//getting meals (restaurant side)
+//getting meals (restaurant side) 
+
 mealController.getMeals = async (req, res, next) => {
-    const { email } = req.params;
+  try{
+    const { rest_id } = req.params; //ensure the get request includes rest_id as param
+    console.log(req.params)
     const restmeals =
-      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.email = $1';
-    const results = await db.query(restmeals, [email]);
+      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.id = $1';
+    const results = await db.query(restmeals, [rest_id]);
+
     if (!results.rows) {
       res.locals.getMeals = [];
     } else {
       res.locals.getMeals = results.rows;
     }
-  
-    return next();
+
+    res.status(201).json({
+      status: 'success',
+      meals: res.locals.getMeals,
+    })
+  } catch (err){
+    next(err);
+  }
   };
 
 //getting available meals (npo side)
