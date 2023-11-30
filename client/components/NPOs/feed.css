@@ -1,0 +1,90 @@
+/* nav {
+  display: flex;
+  width: 80px;
+  height: 80px;
+  padding: 0px 32px;
+  justify-content: end;
+  align-items: end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+button {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+h1 {
+  color: #12223e;
+  text-align: center;
+  font-family: Outfit;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 5.76px;
+  text-transform: uppercase;
+}
+
+span {
+  color: #ea6f67;
+  font-family: Outfit;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 5.76px;
+  text-transform: uppercase;
+}
+
+.npo-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  padding-top: 100px;
+}
+
+.feed {
+  display: flex;
+  justify-content: space-between;
+}
+
+.labels {
+  display: flex;
+  width: 960px;
+  padding: 32px 40px;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(18, 34, 62, 0.5);
+  font-family: Outfit;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.restaurant {
+  display: flex;
+  width: 960px;
+  padding: 32px 40px;
+  justify-content: space-between;
+  align-items: center;
+  color: #12223e;
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.36px;
+}
+
+.restaurant > button {
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+} */
