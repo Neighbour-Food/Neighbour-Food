@@ -5,6 +5,7 @@ const distanceDifference = (origin, restOptions) => {
 
     // origin to be object with lat, long and distance pref of NPO
     // rest options to be an array with objects, containign rest id, long and lat,
+    
     // using Haversine formula
     
     const degreesToRadians = (deg) => {

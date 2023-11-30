@@ -23,11 +23,7 @@ exports.list = async (req, res, next) => {
 exports.claim = async (req, res, next) => {
   try {
     const { meal_id, npo_id } = req.body;
-
     const queryStr = `UPDATE meals SET WHERE id = ``${meal_id}`
-
-
-
     res.status(200).json({
     status: 'success',
     user: result.rows[0].id,
