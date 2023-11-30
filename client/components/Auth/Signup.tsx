@@ -9,20 +9,10 @@ import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Autocomplete from '../Autocomplete';
 
-// const YourMainComponent = () => {
-const handleLocationSelect = (latLng) => {
-  console.log('Selected Location:', latLng);
-  // Do something with the selected location, e.g., update state
-};
-// }
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-
-  // Array for all states to display as select options
-  const states = ["", "AK - Alaska", "AL - Alabama", "AR - Arkansas", "AS - American Samoa", "AZ - Arizona", "CA - California", "CO - Colorado", "CT - Connecticut", "DC - District of Columbia", "DE - Delaware", "FL - Florida", "GA - Georgia", "GU - Guam", "HI - Hawaii", "IA - Iowa", "ID - Idaho", "IL - Illinois", "IN - Indiana", "KS - Kansas", "KY - Kentucky", "LA - Louisiana", "MA - Massachusetts", "MD - Maryland", "ME - Maine", "MI - Michigan", "MN - Minnesota", "MO - Missouri", "MS - Mississippi", "MT - Montana", "NC - North Carolina", "ND - North Dakota", "NE - Nebraska", "NH - New Hampshire", "NJ - New Jersey", "NM - New Mexico", "NV - Nevada", "NY - New York", "OH - Ohio", "OK - Oklahoma", "OR - Oregon", "PA - Pennsylvania", "PR - Puerto Rico", "RI - Rhode Island", "SC - South Carolina", "SD - South Dakota", "TN - Tennessee", "TX - Texas", "UT - Utah", "VA - Virginia", "VI - Virgin Islands", "VT - Vermont", "WA - Washington", "WI - Wisconsin", "WV - West Virginia", "WY - Wyoming"]
 
   // Var for restaurant or NPO category
   const category = useSelector((state: RootState) => state.user.category);
@@ -75,7 +65,6 @@ const Signup: FC = () => {
   return (
     <>
       <div className="signup">
-        {/* <Produce /> */}
         <Sidebar />
         <section className="hero">
           <Navbar />
@@ -86,41 +75,16 @@ const Signup: FC = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange} />
             <h3>CONTACT INFO</h3>
-            {/* <div className="org-name"> */}
-            {/* <div className="column"> */}
             <label htmlFor="org">Name of Org</label>
             <input type="text" name="org" onChange={handleInputChange} />
-            {/* </div>
-              <div> */}
             <label htmlFor="contact">Contact Name</label>
             <input type="text" name="contact" onChange={handleInputChange} />
-            {/* </div> */}
-            {/* </div> */}
             <label htmlFor="email">Email</label>
             <input type="text" name="email" onChange={handleInputChange} />
             <label htmlFor="phone">Phone Number</label>
             <input type="text" name="phone" onChange={handleInputChange} />
-            <label htmlFor="phone">Phone Number</label>
-            <input type="text" name="phone" onChange={handleInputChange} />
             <label htmlFor="street">Street Adress</label>
-            <Autocomplete onSelect={handleLocationSelect} />
-            {/* <input type="text" name="street" onChange={handleInputChange} /> */}
-            {/* <div className="address"> */}
-            {/* <div>
-                <label htmlFor="city">City</label>
-                <input type="text" name="city" value={''} onChange={handleInputChange} />
-              </div> */}
-            {/* <div>
-                <label htmlFor="contact">State</label>
-                <select className="state" name="state" onChange={handleInputChange}>
-                  {states.map((state) => <option value={state} key={state}>{state}</option>)}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="zip">Zip</label>
-                <input type="text" name="zip" value={''} onChange={handleInputChange} />
-              </div> */}
-            {/* </div> */}
+            <Autocomplete />
             {category === 'NON-PROFIT' &&
               <>
                 <label htmlFor="pickup">Pick Up Radius</label>
