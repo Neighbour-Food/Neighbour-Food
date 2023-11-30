@@ -39,14 +39,14 @@ const Login: FC = () => {
 
     // POST REQUEST
     try {
-      const request = await axios.post('https://localhost:4000/login', {
+      const request = await axios.post('http://localhost:4000/api/users/login', {
         loginData
       });
 
-      if (request) { // CHECK WITH BACKEND 
+      if (request.status) { // CHECK WITH BACKEND 
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
-      }
+      } // ELSE IS MISSING
 
 
     }
