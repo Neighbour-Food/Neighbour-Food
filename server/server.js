@@ -4,6 +4,7 @@ const authRouter = require('./routes/authRoutes.js');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const app = express();
+const path = require('path');
 const PORT = 3000;
 
 dotenv.config();
