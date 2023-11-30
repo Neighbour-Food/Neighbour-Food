@@ -10,6 +10,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 const { Storage } = require('@google-cloud/storage');
 const crypto = require('crypto');
 const app = express();
+const path = require('path');
 const PORT = 3000;
 
 dotenv.config();
