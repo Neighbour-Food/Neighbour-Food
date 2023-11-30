@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, ReactHTMLElement, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
 import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
@@ -9,10 +10,23 @@ import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Autocomplete from '../Autocomplete';
 
+interface SuccessResponse {
+  status: 'Success';
+  data: /* your specific data type */;
+}
+
+interface ErrorResponse {
+  status: 'Denied';
+  error: string;
+}
+
+type MyResponse = SuccessResponse | ErrorResponse;
+
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
   // Var for restaurant or NPO category
   const category = useSelector((state: RootState) => state.user.category);
@@ -44,15 +58,21 @@ const Signup: FC = () => {
 
     // POST REQUEST
     try {
-      const request = await axios.post('http://localhost:4000/api/users/signup', {
+      const request: any = await axios.post('http://localhost:4000/api/users/signup', {
         formData
       });
 
-      if (request) { // request.status === 'success' // get user id // change signedin state to true
-        console.log('request: ', request)
+      if (request.status === 'Success') { 
+        // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
-      } // ELSE IS MISSING
+
+        dispatch(changeIsSignedIn())
+        //use user name and add to redux store
+
+      } else {
+        alert('please try again')
+      }
 
     }
     catch (err) {
