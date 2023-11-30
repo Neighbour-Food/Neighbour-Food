@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   mode: process.env.NODE_ENV,
-  entry: "./client/index.js",
+  entry: "./client/index.tsx",
   output: {
     path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
@@ -40,16 +40,10 @@ module.exports = {
         loader: "babel-loader",
         options: {
           presets: ["@babel/env", "@babel/react"],
-          //   plugins: [
-          //     "@babel/plugin-transform-runtime", //?
-          //     "@babel/transform-async-to-generator", //?
-          //   ],
         },
       },
       {
-        // test: /\.(scss|css)$/,
         test: /\.css$/i,
-        // exclude: /node_modules/,
         use: ["style-loader", "css-loader"],
       },
       {
@@ -60,14 +54,20 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      }
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/index.html",
+      template: path.join(__dirname, "/client/index.html"),
+      inject: true,
     }),
   ],
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };
