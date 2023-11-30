@@ -3,6 +3,7 @@ import { useSelector } from "react-redux/";
 import { RootState } from "../../state/store";
 import OrdersList from "./OrdersList";
 import Sidebar from "../Sidebar";
+import NpoFeedImage from "../../../assets/npoFeedImage";
 import "./feed.css";
 
 const Feed: FC = () => {
@@ -22,7 +23,7 @@ const Feed: FC = () => {
             Hi {orgName},<br />
             <span> 3 restaurants</span> are ready for pick up
           </h1>
-          {/* <NpoFeedImage /> */}
+          <NpoFeedImage />
           <OrdersList />
         </div>
       </div>
