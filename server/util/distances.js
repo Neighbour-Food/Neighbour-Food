@@ -1,7 +1,7 @@
 
 
 const distanceDifference = (origin, restOptions) => {
-    // assume maybe we just send an array of the resturaunts in the same state that have meals to offer?
+    // assume maybe we just send an array of the resturaunts in the same state and same type (vegan, veg, etc.) that have meals to offer?
 
     // origin to be object with lat, long and distance pref of NPO
     // rest options to be an array with objects, containign rest id, long and lat,
