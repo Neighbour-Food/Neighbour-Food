@@ -1,0 +1,36 @@
+.loader-container {
+    height: 100vh;
+    align-items: center;
+    background-color: #F4F2ED;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.loader {
+    margin: 200px auto;
+    border: 20px solid #FFF;
+    border-radius: 50%;
+    border-top: 20px solid #12223E;
+    width: 200px;
+    height: 200px;
+    animation: spinner 4s linear infinite;
+}
+
+.loader-p {
+    position: relative;
+    top: 320px;
+    margin: auto;
+    width: 200px;
+    text-align: center;
+}
+
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

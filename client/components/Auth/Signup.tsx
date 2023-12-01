@@ -4,15 +4,16 @@ import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
+import { changeIsSignedIn, setFormData, setIsLoading, setUsername } from "../../state/user/userSlice";
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Autocomplete from '../Autocomplete';
+import IsLoading from "../IsLoading";
 
 interface SuccessResponse {
   status: 'Success';
-  data: /* your specific data type */;
+  // data: /* your specific data type */;
 }
 
 interface ErrorResponse {
@@ -28,13 +29,15 @@ const Signup: FC = () => {
   const navigate = useNavigate();
 
 
-  // Var for restaurant or NPO category
+  // Var for user states
   const category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  // const username = useSelector((state: RootState) => state.user.username);
   // console.log(formData)
 
 
-  //function to handle change and update state with redux
+  //function to handle user data and update state with redux
   const handleInputChange = (event: any) => { // H E L P
     const { name, value } = event.target
     if (!formData.category) {
@@ -56,22 +59,26 @@ const Signup: FC = () => {
     event.preventDefault();
     console.log('submit: ', formData)
 
+
     // POST REQUEST
     try {
+      dispatch(setIsLoading());
+
       const request: any = await axios.post('http://localhost:4000/api/users/signup', {
         formData
       });
 
-      if (request.status === 'Success') { 
+      if (request.status === 'Success') {
         // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
 
+        dispatch(setIsLoading());
         dispatch(changeIsSignedIn())
-        //use user name and add to redux store
+        dispatch(setUsername(request.username));
 
       } else {
-        alert('please try again')
+        alert('please enter all information')
       }
 
     }
@@ -80,9 +87,12 @@ const Signup: FC = () => {
     }
   };
 
-
-
-  return (
+  if (isLoading) {
+    return (
+      <>
+        <IsLoading />
+      </>)
+  } else return (
     <>
       <div className="signup">
         <Sidebar />
