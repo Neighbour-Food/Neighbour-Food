@@ -13,8 +13,8 @@ const CreateOrder: FC = () => {
   const username = 'Michael';
   const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn);
   const createOrderTab = useSelector((state: RootState) => state.user.createOrderTab);
-  // const orderScreen = useSelector((state: RootState) => state.user.orderScreen);
-  const orderScreen = 'order-form' || '';
+  const orderScreen = useSelector((state: RootState) => state.user.orderScreen);
+  // const orderScreen = 'order-form' || '';
   const imgFile = useSelector((state: RootState) => state.user.imgFile);
   
 
