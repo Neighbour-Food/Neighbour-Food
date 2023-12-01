@@ -1,13 +1,21 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { setCreateOrderTab, setOrderScreen, setImgFile } from "../../state/user/userSlice";
+import { setCreateOrderTab, setOrderScreen, setOrderInput, setOrderData, setIsLoading, setImgFile } from "../../state/user/userSlice";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
-import IMG3 from '../../../assets/IMG3'
+import IMG3 from '../../../assets/IMG3';
+import IsLoading from "../IsLoading";
+
 
 const CreateOrder: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [imgFile, setImgFile] = useState(null);
+  // const [signedUrl, setSignedUrl] = useState(null);
 
   // const username = useSelector((state: RootState) => state.user.username);
   const username = 'Michael';
@@ -15,65 +23,101 @@ const CreateOrder: FC = () => {
   const createOrderTab = useSelector((state: RootState) => state.user.createOrderTab);
   const orderScreen = useSelector((state: RootState) => state.user.orderScreen);
   // const orderScreen = 'order-form' || '';
-  const imgFile = useSelector((state: RootState) => state.user.imgFile);
-  
+  // const imgFile = useSelector((state: RootState) => state.user.imgFile);
+  const orderInput = useSelector((state: RootState) => state.user.orderInput);
+  const orderData = useSelector((state: RootState) => state.user.orderData);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
+
+
 
   // function to switch between categories on click
   const handleTab = (event: any) => { /// H E L P
     dispatch(setCreateOrderTab(event.target.value));
   };
 
-  const handleInputChange = (event: any) => { /// H E L P
-    // dispatch to order reducer
+  const handleInputChange = (event: any) => {
+    const { name, value } = event.target
+
+    dispatch(setOrderInput(
+      { ...orderInput, [name]: value }
+    ))
+    console.log('orderInput :', orderInput)
   };
 
   const handleFileChange = (event: any) => {
     const selectedFile = event.target.files[0];
-    dispatch(setImgFile(selectedFile));
+    console.log('selectedFile: ', selectedFile)
+    // dispatch(setImgFile(selectedFile));
+    setImgFile(selectedFile)
   };
 
-  const handleUpload = () => {
+  const handleCancel = (event: any) => {
+    dispatch(setOrderData([]));
+  }
+
+  const handleAddItem = (event: any) => {
+    console.log('orderInput :', orderInput)
+    dispatch(setOrderData([...orderData, orderInput]))
+  }
+
+  const handleUpload = async (event: any) => {
+    event.preventDefault();
+    dispatch(setIsLoading());
+    
+
     if (!imgFile) {
       console.error('No image selected');
-      return;
+      // return;
     }
-    console.log('imgFile: ', imgFile)
 
-    // server req for signed url
-    fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ fileName: imgFile }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        const { signedUrl, fileName } = data;
-        fetch(signedUrl, {
-          method: 'PUT',
-          body: imgFile,
-          headers: {
-            'Content-Type': imgFile.type,
-          },
-        })
-          .then((response) => {
-            if (response.ok) {
-              console.log('Image uploaded successfully');
-            } else {
-              console.error('Failed to upload file:', response.statusText);
-            }
-          })
-          .catch((error) => {
-            console.error('Error uploading file:', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error getting signed URL:', error);
+    try {
+      // server req for signed url
+      const signedUrlResponse = await axios.post('http://localhost:4000/generate-signed-url', {
+        fileName: imgFile,
       });
+
+      const { signedUrl } = signedUrlResponse.data;
+
+      // Upload the image using the signed URL
+      await axios.put(signedUrl, imgFile, {
+        headers: {
+          'Content-Type': imgFile.type,
+        },
+      });
+
+      console.log('Image uploaded successfully');
+    } catch (error) {
+      // alert('File not uploaded')
+      console.error('Error uploading file:', error.message);
+    }
+
+    try {
+      // server req for posting meal
+      console.log('orderData :', orderData)
+      const request: any = await axios.post('http://localhost:4000/api/meals/postMeal', {
+        orderData
+      });
+
+      if (request.data.status === 'success') {
+        navigate("/create-order")
+        dispatch(setIsLoading());
+        dispatch(setCreateOrderTab('history'))
+      } else {
+        alert('please enter all information')
+      }
+
+    }
+    catch (err) {
+      console.log('error: ', err)
+    }
   };
 
-  return (
+  if (isLoading) {
+    return (
+      <>
+        <IsLoading />
+      </>)
+  } else return (
     <>
       <div className="signup">
         <Sidebar />
@@ -98,19 +142,35 @@ const CreateOrder: FC = () => {
                 <input type="text" name="pick-up-time" onChange={handleInputChange} className="border-bottom" />
                 <div className="add-bottom-border"></div>
                 <div className="food-item">
-                  <label htmlFor="food-item">Food item</label>
+                  <label htmlFor="food-item">Food item #1</label>
                   <input type="text" name="food-item" onChange={handleInputChange} className="border-bottom" />
                   <label htmlFor="img-upload">Upload image</label>
                   <input type="file" name="img-upload" onChange={handleFileChange} className="border-bottom" />
                   <label htmlFor="instructions">Special instructions</label>
                   <input type="text" name="instructions" onChange={handleInputChange} className="border-bottom" />
                 </div>
-                <button className="white-button" type="submit" >ADD ITEM</button>
+                {orderData.map((order, index) => {
+                  return (
+                    <div className="food-item" key={index}>
+                      <label htmlFor="food-item">Food item #{index + 2}</label>
+                      <input type="text" name="food-item" onChange={handleInputChange} className="border-bottom" />
+                      <label htmlFor="img-upload">Upload image</label>
+                      <input type="file" name="img-upload" onChange={handleFileChange} className="border-bottom" />
+                      <label htmlFor="instructions">Special instructions</label>
+                      <input type="text" name="instructions" onChange={handleInputChange} className="border-bottom" />
+                    </div>
+                  )
+                })}
+                <button className="white-button" type="button" onClick={handleAddItem}>ADD ITEM</button>
+                <div className="buttons">
+                  <button className="white-button" type="button" onClick={handleCancel}>Cancel</button>
+                  <button className="black-button" type="submit">Post</button>
+                </div>
               </form>
             </>
           ) : (
 
-            <div>History</div>
+            <h1 style={{padding: '300px'}}>History</h1>
           )}
 
         </section>

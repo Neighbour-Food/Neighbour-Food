@@ -1,38 +1,40 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
+interface OrderData {
+  pickUpTime: number;
+  foodItem : string;
+  nstructions: string;
+}
 
 interface UserState {
   isSignedIn: boolean,
-  isLoading : boolean,
-  createOrderTab : string,
+  isLoading: boolean,
+  createOrderTab: string,
   orderScreen: string,
   category: string,
   username: string,
-  // formData: {
-  // name: string,
-  // paswword: string
-  // }, // H E L P
   formData: any,
   loginData: any,
-  address : string,
-  imgFile : any
+  address: string,
+  imgFile: any,
+  orderInput: any,
+  orderData: OrderData[]
 }
 
 const initialState: UserState = {
   isSignedIn: false,
-  isLoading : false,
+  isLoading: false,
   createOrderTab: 'entry',
   orderScreen: '',
   category: 'NON-PROFIT',
   username: '',
-  formData: {
-    // name: '',
-    // paswword: ''
-  },
+  formData: {},
   loginData: {},
-  address : '',
-  imgFile : undefined
+  address: '',
+  imgFile: undefined,
+  orderInput: {},
+  orderData: []
 };
 
 const userSlice = createSlice({
@@ -66,10 +68,16 @@ const userSlice = createSlice({
     setImgFile: (state, action: any) => {
       state.imgFile = action.imgFile;
     },
+    setOrderInput: (state, action: any) => {
+      state.orderInput = action.payload;
+    },
+    setOrderData: (state, action: PayloadAction<OrderData[]>) => {
+      state.orderData = action.payload;
+    },
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername,setCreateOrderTab, setOrderScreen, setImgFile } = userSlice.actions;
+export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData } = userSlice.actions;
 
 export default userSlice.reducer;
 

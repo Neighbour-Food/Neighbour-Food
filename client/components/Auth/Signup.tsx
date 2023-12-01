@@ -68,14 +68,14 @@ const Signup: FC = () => {
         formData
       });
 
-      if (request.status === 'Success') {
+      if (request.data.status === 'success') {
         // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
 
         dispatch(setIsLoading());
         dispatch(changeIsSignedIn())
-        dispatch(setUsername(request.username));
+        dispatch(setUsername(request.data.username));
 
       } else {
         alert('please enter all information')

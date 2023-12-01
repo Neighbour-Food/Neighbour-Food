@@ -181,3 +181,14 @@ nav button {
     border-radius: 8px;
     border: 1px solid #EDECE8
 }
+
+.buttons {
+    position: relative;
+    justify-content: right;
+    left: 240px;
+}
+
+.buttons button {
+    margin-top: 100px;
+    margin-right: 20px;
+}
