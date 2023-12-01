@@ -1,8 +1,8 @@
 const db = require('../db/sqlmodel');
+const distanceDifference = require('../util/distances');
 const mealController = {};
 
-//getting meals (restaurant side) 
-
+// getting meals (restaurant side) 
 mealController.getMeals = async (req, res, next) => {
   try{
     const { rest_id } = req.params; //ensure the get request includes rest_id as param
@@ -26,27 +26,71 @@ mealController.getMeals = async (req, res, next) => {
   }
   };
 
-//getting available meals (npo side)
+// getting available meals (npo side)
 mealController.getAvailableMeals = async (req, res, next) => {
-    const availablemeals =
-      'SELECT * FROM meals WHERE status = $1';
-    const results = await db.query(availablemeals, ['available']);
-    if (!results.rows) {
+
+  //npo id => npo state and dist pref => sql restuarants in that state => put into helper function to get within distance => get meals from those rest
+  try {
+    const { npo_id } = req.params; //npo id
+  
+    const npo_info = 'SELECT state, pref_distance, longitude, latitude FROM npos WHERE id = $1';
+    const npo_info_res = await db.query(npo_info, [npo_id]);
+    const npoLongitude = npo_info_res.rows[0].longitude;
+    const npoLatitude = npo_info_res.rows[0].latitude;
+  
+    let state;
+    let pref_distance;
+  
+    if (!npo_info_res.rows[0]){
       res.locals.availableMeals = [];
     } else {
-      res.locals.availableMeals = results.rows;
+      state = npo_info_res.rows[0].state;
+      pref_distance = npo_info_res.rows[0].pref_distance;
     }
   
-    return next();
-  };
-
+    state = state.trim();
   
+    const restWithinStateQuery = 'SELECT id, longitude, latitude FROM restaurants WHERE state = $1';
+    const restWithinState = await db.query(restWithinStateQuery, [state]);
+  
+    let withinDistance;
+  
+    if (!restWithinState.rows){
+      res.locals.availableMeals = [];
+    } else { 
+       withinDistance = distanceDifference({longitude: npoLongitude, latitude: npoLatitude, distance_pref : pref_distance}, restWithinState.rows); //returns an array of the rest_ids within the distance
+    }
+  
+    if (withinDistance.length > 0){
+      const availableMeals = await Promise.all(withinDistance.map(async (rest_id) => {
+        const availMealQuery = 'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
+        const availMeal = await db.query(availMealQuery, [rest_id, 'available']);
+        return availMeal.rows
+      }));
+    }
+  
+    res.status(201).json({
+      status: 'success',
+      meals: availableMeals,
+    })
+
+  } catch (err) {
+    next(err);
+  }
+ 
+};
+
+// update a meal status (claim / unclaim ) by npo 
+
+// restuarant edit entire meal   by rest
+
+
   // posting meals
   mealController.postMeal = async (req, res, next) => {
     console.log('meals');
     // query the db with the current user's (restaurant's) email and get the id in the users table based off their email
     const findRestQuery = 'SELECT id FROM restaurants WHERE email=$1';
-    const foundRestID = await db.query(findRestQuery, [req.body.email]);
+    const foundRestID = await db.query(findRestQuery, [req.body.rest_id]);
   
     if (!foundRestID.rowCount) {
       return next('No id found in the restaurants table');
