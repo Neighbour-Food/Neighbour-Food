@@ -17,8 +17,8 @@ const CreateOrder: FC = () => {
   const [imgFile, setImgFile] = useState(null);
   // const [signedUrl, setSignedUrl] = useState(null);
 
-  // const username = useSelector((state: RootState) => state.user.username);
-  const username = 'Michael';
+  const username = useSelector((state: RootState) => state.user.username);
+  // const username = 'Michael';
   const isSignedIn = useSelector((state: RootState) => state.user.isSignedIn);
   const createOrderTab = useSelector((state: RootState) => state.user.createOrderTab);
   const orderScreen = useSelector((state: RootState) => state.user.orderScreen);
