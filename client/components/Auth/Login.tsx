@@ -3,9 +3,23 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setCategory, setLoginData } from "../../state/user/userSlice";
+import { changeIsSignedIn, setCategory, setLoginData, setIsLoading, setUsername } from "../../state/user/userSlice";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
+
+
+interface SuccessResponse {
+  status: 'Success';
+  // data: /* your specific data type */;
+}
+
+interface ErrorResponse {
+  status: 'Denied';
+  error: string;
+}
+
+type MyResponse = SuccessResponse | ErrorResponse;
+
 
 const Login: FC = () => {
   const dispatch = useDispatch();
@@ -14,6 +28,7 @@ const Login: FC = () => {
   // Var for restaurant or NPO category
   const category = useSelector((state: RootState) => state.user.category);
   const loginData = useSelector((state: RootState) => state.user.loginData);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
   //function to handle change and update state with redux
   const handleInputChange = (event: any) => { // H E L P
@@ -39,15 +54,24 @@ const Login: FC = () => {
 
     // POST REQUEST
     try {
-      const request = await axios.post('http://localhost:4000/api/users/login', {
+      dispatch(setIsLoading());
+
+      const request : any = await axios.post('http://localhost:4000/api/users/login', {
         loginData
       });
 
-      if (request.status) { // CHECK WITH BACKEND 
+      if (request.status === 'Success') {
+        // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
-      } // ELSE IS MISSING
 
+        dispatch(setIsLoading());
+        dispatch(changeIsSignedIn())
+        dispatch(setUsername(request.username));
+
+      } else {
+        alert('please enter all information')
+      }
 
     }
     catch (err) {

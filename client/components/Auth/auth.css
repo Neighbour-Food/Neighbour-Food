@@ -1,6 +1,6 @@
 .hero h2 {
     color: #12223E;
-    text-align: center;
+    /* text-align: center; */
     font-family: Outfit;
     font-size: 24px;
     font-weight: 700;
@@ -8,6 +8,7 @@
     letter-spacing: 6px;
     text-transform: uppercase;
     margin-top: 150px;
+    width: 100%;
 }
 
 h3 {
@@ -34,6 +35,7 @@ h3 {
     text-decoration: none;
     color: #EA6F67;
 }
+
 
 .signup {
     display: flex;

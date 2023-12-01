@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { RootState } from "../state/store";
-import { setFormData, setAddress } from "../state/user/userSlice";
+import { setFormData } from "../state/user/userSlice";
 import { useSelector, useDispatch } from "react-redux/";
 
 const Autocomplete = () => {
