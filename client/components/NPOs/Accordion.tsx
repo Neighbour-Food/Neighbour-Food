@@ -21,25 +21,33 @@ const Accordion: React.FC<AccordionProps> = ({
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div className="accordion-item">
-      <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
-        <div className="accordion-title-item">{name}</div>
-        <div className="accordion-title-item">{pickupTime}</div>
-        <div className="accordion-title-item">{status}</div>
-        <div className="accordion-title-item">{isActive ? "-" : "+"}</div>
-      </div>
-      {isActive && (
-        <div className="accordion-content">
-          {
-            <OrderCard
-              title={title}
-              image={image}
-              specialInstructions={specialInstructions}
-            />
-          }
+      <div className="accordion-item">
+        <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
+          <div className="accordion-title-item">{name}</div>
+          <div className="accordion-title-item">{pickupTime}</div>
+          <div className="accordion-title-item">{status}</div>
+          <div className="accordion-title-item">{isActive ? "-" : "+"}</div>
         </div>
-      )}
-    </div>
+        <div className="ruler">
+          {isActive && (
+            <div className="drop-down">
+              <div className="accordion-content">
+                {
+                  <OrderCard
+                    title={title}
+                    image={image}
+                    specialInstructions={specialInstructions}
+                  />
+                }
+              </div>
+              <div className="order-buttons">
+                <button className="pick-up-order-button">Pick Up</button>
+                <button className="cancel-order-button">Cancel</button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
   );
 };
 

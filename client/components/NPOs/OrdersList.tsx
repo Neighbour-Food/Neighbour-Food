@@ -43,7 +43,7 @@ const OrdersList: FC = () => {
           <div className="accordion-title-item"></div>
         </div>
         {data.map(
-          ({ name, title: title, pickUpTime, status, image, specialInstructions }) => (
+          ({ name, title, pickUpTime, status, image, specialInstructions }) => (
             <Accordion
               name={name}
               title={title}

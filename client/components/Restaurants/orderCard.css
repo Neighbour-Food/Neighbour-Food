@@ -6,10 +6,7 @@
   border: 1px solid rgba(18, 34, 62, 0.3);
   background: #12223e;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  grid-column-gap: 0px;
-  grid-row-gap: 0px;
+
 }
 
 .order-card-title {
@@ -50,9 +47,6 @@
   border-radius: 8px;
   grid-area: 1 / 2 / 4 / 3;
 }
-
-/* .order-card-title,
-.order-card-special-instructions,
-.order-card-checkbox:nth-child(-n + 3) {
-  grid-column: span 3;
-} */
+.order-text {
+  margin-right: 3px;
+}

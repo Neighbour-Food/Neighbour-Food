@@ -1,20 +1,3 @@
-/* nav {
-  display: flex;
-  width: 80px;
-  height: 80px;
-  padding: 0px 32px;
-  justify-content: end;
-  align-items: end;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-button {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-} */
-
 .npo-feed h1 {
   color: #12223e;
   text-align: center;
@@ -61,7 +44,7 @@ span {
 .labels,
 .accordion-title {
   display: flex;
-  width: 1000px;
+  width: 1100px;
   padding: 32px 40px;
   justify-content: space-evenly;
   align-items: start;
@@ -83,7 +66,6 @@ span {
 
 .accordion-title-item {
   cursor: pointer;
-  
 }
 
 .accordion-title {
@@ -94,5 +76,55 @@ span {
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.36px;
-  
+}
+
+.order-buttons {
+  display: flex;
+  margin: 20px 0;
+}
+
+.pick-up-order-button {
+  display: flex;
+  padding: 11px 16px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 40px;
+  background: #12223e;
+  color: #fff;
+  text-align: right;
+  font-family: Outfit;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.cancel-order-button {
+  display: flex;
+  padding: 11px 16px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 40px;
+  border: 1px solid #12223e;
+  color: #12223e;
+  text-align: right;
+  font-family: Outfit;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.drop-down {
+  margin-left: 75px;
+}
+
+.accordion-item {
+  border-top: 1px solid #edece8;
+  width: 83%;
 }
