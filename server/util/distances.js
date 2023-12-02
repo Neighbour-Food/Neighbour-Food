@@ -15,9 +15,9 @@ const distanceDifference = (origin, restOptions) => {
     const earthRadius = 6371; // km
 
     restOptions.forEach(rest => {
-        const dLat = degreesToRadians(origin.lat - rest.lat);
-        const dLng = degreesToRadians(origin.lng - rest.lng);
-        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(degreesToRadians(rest.lat)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const dLat = degreesToRadians(origin.latitude - rest.latitude);
+        const dLng = degreesToRadians(origin.longitude - rest.longitude);
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(degreesToRadians(rest.latitude)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         const distanceKm = earthRadius * c;
         const distanceMi = distanceKm / 1.609; //convert km to mi

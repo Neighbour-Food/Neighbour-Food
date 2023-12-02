@@ -37,8 +37,8 @@ const initialState: UserState = {
   address: '',
   imgFile: {},
   orderInput: {},
-  orderData: []
-orgName: "Very Good Org"
+  orderData: [],
+  orgName: "Very Good Org"
 };
 
 const userSlice = createSlice({

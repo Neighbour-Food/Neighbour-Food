@@ -33,7 +33,7 @@ const Signup: FC = () => {
 
 
   // Var for user states
-  const category = useSelector((state: RootState) => state.user.category);
+  let category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
   const username = useSelector((state: RootState) => state.user.username);
@@ -79,7 +79,7 @@ const Signup: FC = () => {
         dispatch(setUsername(request.data.username));
         dispatch(setId(request.data.id));
         // console.log('request: ', request)
-        if (category === 'NON_PROFIT') navigate("/feed")
+        if (category === 'NON-PROFIT') navigate("/feed")
         else navigate("/create-order")
 
         dispatch(setIsLoading());

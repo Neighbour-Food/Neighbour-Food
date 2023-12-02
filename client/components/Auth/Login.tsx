@@ -24,7 +24,7 @@ const Login: FC = () => {
   const navigate = useNavigate();
 
   // Var for restaurant or NPO category
-  const category = useSelector((state: RootState) => state.user.category);
+  let category = useSelector((state: RootState) => state.user.category);
   const loginData = useSelector((state: RootState) => state.user.loginData);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
@@ -62,7 +62,7 @@ const Login: FC = () => {
         // console.log('request: ', request)
         dispatch(setUsername(request.data.username));
         dispatch(setId(request.data.id));
-        if (category === 'NON_PROFIT') navigate("/feed")
+        if (category === 'NON-PROFIT') navigate("/feed")
         else navigate("/create-order")
 
         dispatch(setIsLoading());

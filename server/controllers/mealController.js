@@ -7,7 +7,7 @@ mealController.getMeals = async (req, res, next) => {
     const { rest_id } = req.params; //ensure the get request includes rest_id as param
 
     const restmeals =
-      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.id = $1';
+      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1';
     const results = await db.query(restmeals, [rest_id]);
 
     if (!results.rows) {
@@ -213,7 +213,7 @@ mealController.getRestAndAvailableMeals = async (req, res, next) => {
     let pref_distance = npo_info_res.rows[0].pref_distance;
     state = state.trim();
   
-    const restWithinStateQuery = 'SELECT id, longitude, latitude FROM restaurants WHERE state = $1';
+    const restWithinStateQuery = 'SELECT id, longitude, latitude FROM restaurant WHERE state = $1';
     const restWithinState = await db.query(restWithinStateQuery, [state]);
   
     let withinDistance = [];
@@ -227,22 +227,41 @@ mealController.getRestAndAvailableMeals = async (req, res, next) => {
     }
   
     if (withinDistance.length > 0){
-        availableRestWMeals = await Promise.all(withinDistance.map(async (rest_id) => {
-        const availRestWMealQuery = 'SELECT r.id FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
-        const availRestsWmealRes = await db.query(availRestWMealQuery, [rest_id, 'available']);
-        return availRestsWmealRes.rows
-      }))
-      const availableMeals = await Promise.all(withinDistance.map(async (rest_id) => {
-        const availMealQuery = 'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurants r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
-        const availMeal = await db.query(availMealQuery, [rest_id, 'available']);
-        return availMeal.rows
-      }));
+
+      availableRestWMeals = await Promise.all(withinDistance.map(
+        async (rest_id) => {
+          const availRestWMealQuery = 'SELECT DISTINCT r.id, r.org FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
+          const availRestsWmealRes = await db.query(availRestWMealQuery, [rest_id, 'available']);
+          if (availRestsWmealRes.rows.length > 0){
+            return availRestsWmealRes.rows
+          } else {
+            return
+          }
+      })
+      )
+      
+      availableMeals = await Promise.all(withinDistance.map(
+        async (rest_id) => {
+          const availMealQuery = 'SELECT m.body_text, m.headline, m.pickup_start, m.pickup_end, m.status, m.rest_id FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
+          const availMeal = await db.query(availMealQuery, [rest_id, 'available']);
+          if(availMeal.rows.length > 0) {
+            return availMeal.rows
+          } else {
+            return
+          }
+        })
+      );
     }
+
+    const filteredRests = availableRestWMeals.filter((entry) => entry !== undefined)
+    // const dupRemovedRests = new Set(filteredRests);
+
+    const filteredMeals = availableMeals.filter((meal) => meal !== undefined)
   
     res.status(201).json({
       status: 'success',
-      restaurants: availableRestWMeals,
-      meals: availableMeals
+      restaurants: filteredRests[0],
+      meals: filteredMeals[0]
     })
 
   } catch (err) {
