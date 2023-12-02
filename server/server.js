@@ -35,26 +35,26 @@ app.use(express.static(path.resolve(__dirname, "../build")));
 
 // ROUTES
 
-// const storage = new Storage({
-//   projectId: 'empirical-radio-406002',
-//   keyFilename: 'server/empirical-radio-406002-62edab3ef56a.json',
-// });
 const storage = new Storage({
-  projectId: process.env.GCS_PROJECT_ID,
-  credentials: {
-    type: process.env.GCS_TYPE,
-    project_id: process.env.GCS_PROJECT_ID,
-    private_key_id: process.env.GCS_PRIVATE_KEY_ID,
-    private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    client_email: process.env.GCS_CLIENT_EMAIL,
-    client_id: process.env.GCS_CLIENT_ID,
-    auth_uri: process.env.GCS_AUTH_URI,
-    token_uri: process.env.GCS_TOKEN_URI,
-    auth_provider_x509_cert_url: process.env.GCS_AUTH_PROVIDER_X509_CERT_URL,
-    client_x509_cert_url: process.env.GCS_CLIENT_X509_CERT_URL,
-    universe_domain: process.env.GCS_UNIVERSE_DOMAIN,
-  },
+  projectId: 'empirical-radio-406002',
+  keyFilename: 'server/empirical-radio-406002-62edab3ef56a.json',
 });
+// const storage = new Storage({
+//   projectId: process.env.GCS_PROJECT_ID,
+//   credentials: {
+//     type: process.env.GCS_TYPE,
+//     project_id: process.env.GCS_PROJECT_ID,
+//     private_key_id: process.env.GCS_PRIVATE_KEY_ID,
+//     private_key: process.env.GCS_PRIVATE_KEY.replace(/\\n/g, '\n'),
+//     client_email: process.env.GCS_CLIENT_EMAIL,
+//     client_id: process.env.GCS_CLIENT_ID,
+//     auth_uri: process.env.GCS_AUTH_URI,
+//     token_uri: process.env.GCS_TOKEN_URI,
+//     auth_provider_x509_cert_url: process.env.GCS_AUTH_PROVIDER_X509_CERT_URL,
+//     client_x509_cert_url: process.env.GCS_CLIENT_X509_CERT_URL,
+//     universe_domain: process.env.GCS_UNIVERSE_DOMAIN,
+//   },
+// });
 
 app.use('/api/users', authRouter);
 app.use('/api/meals', mealRouter);
@@ -112,6 +112,8 @@ app.post('/generate-signed-url', cors(), (req, res) => {
       // res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
       // res.header('Access-Control-Allow-Headers', 'Content-Type');
       // res.header('Access-Control-Allow-Credentials', true);
+
+
       res.json({ signedUrl, fileName });
     })
     .catch((error) => {

@@ -40,7 +40,8 @@ exports.signup = async (req, res, next) => {
     res.status(201).json({
       status: 'success',
       username: result.rows[0].username,
-      id: result.rows[0].id
+      id: result.rows[0].id,
+      category
     });
   } catch (err) {
     next(err);
@@ -65,7 +66,8 @@ exports.login = async (req, res, next) => {
       res.status(201).json({
         status: 'success',
         username: result.rows[0].username,
-        id: result.rows[0].id
+        id: result.rows[0].id,
+        category
       });
     } else {
       next('username or password is incorrect');

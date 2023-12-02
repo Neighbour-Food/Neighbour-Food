@@ -75,11 +75,10 @@ const Signup: FC = () => {
       });
 
       if (request.data.status === 'success') {
-        console.log(request.data)
         dispatch(setUsername(request.data.username));
         dispatch(setId(request.data.id));
         // console.log('request: ', request)
-        if (category === 'NON-PROFIT') navigate("/feed")
+        if (request.data.category === 'npos') navigate("/feed")
         else navigate("/create-order")
 
         dispatch(setIsLoading());

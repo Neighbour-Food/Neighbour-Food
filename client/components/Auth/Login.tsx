@@ -62,7 +62,7 @@ const Login: FC = () => {
         // console.log('request: ', request)
         dispatch(setUsername(request.data.username));
         dispatch(setId(request.data.id));
-        if (category === 'NON-PROFIT') navigate("/feed")
+        if (request.data.category === 'npos') navigate("/feed")
         else navigate("/create-order")
 
         dispatch(setIsLoading());
