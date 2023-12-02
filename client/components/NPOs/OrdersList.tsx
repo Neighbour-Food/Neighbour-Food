@@ -1,38 +1,32 @@
-import React, { FC } from "react";
+import React, { FC, useState, useEffect } from "react";
 import Accordion from "./Accordion";
-
-const data = [
-  {
-    name: "Phonecia Diner",
-    title: "100 frozen turkeys",
-    pickUpTime: "8PM",
-    status: "Ready",
-    image:
-    "https://i.postimg.cc/SNrJJydD/pexels-ella-olsson-1640772.jpg",
-    specialInstructions: "keep them frozen until you cook them obvi",
-  },
-  {
-    name: "Cleo",
-    title: "Leftover banquet food",
-    pickUpTime: "8PM",
-    status: "Ready",
-    image:
-    "https://i.postimg.cc/SNrJJydD/pexels-ella-olsson-1640772.jpg",
-    specialInstructions: "bring your own tupperware!",
-  },
-  {
-    name: "Black Eye Susie",
-    title: "13 loaves of whole wheat bread",
-    pickUpTime: "4PM",
-    status: "Hold",
-    image:
-    "https://i.postimg.cc/SNrJJydD/pexels-ella-olsson-1640772.jpg",
-    specialInstructions:
-      "you can only have them if you eat them in one sitting",
-  },
-];
+import axios from "axios";
 
 const OrdersList: FC = () => {
+  const [apiData, setApiData] = useState<any>();
+  const [restaurantNames, setRestaurantNames] = useState<string[]>([]);
+
+  useEffect(() => {
+    getMeals(1);
+  }, []);
+
+  const getMeals = async (id: number) => {
+    try {
+      const response = await axios.get(
+        'http://localhost:4000/api/meals/getAvail/1'
+      );
+      console.log(response.data.data.restaurants);
+      const restaurants = response.data.data.restaurants;
+      const names = restaurants.map((restaurant) => restaurant.name);
+      setRestaurantNames(names);
+      setApiData(response.data);
+      
+    } catch (error) {
+      alert("Get Meals Error");
+      console.error("Error getting meals:", error.message);
+    }
+  };
+
   return (
     <div className="orders">
       <div className="accordion">
@@ -42,18 +36,18 @@ const OrdersList: FC = () => {
           <div className="accordion-title-item">Status</div>
           <div className="accordion-title-item"></div>
         </div>
-        {data.map(
-          ({ name, title, pickUpTime, status, image, specialInstructions }) => (
-            <Accordion
-              name={name}
-              title={title}
-              pickupTime={pickUpTime}
-              status={status}
-              image={image}
-              specialInstructions={specialInstructions}
-            />
-          )
-        )}
+        {restaurantNames.map((restaurantName, index) => (
+          <Accordion
+            key={index}
+            name={restaurantName}
+            // Replace the following props with your actual data properties
+            title=""
+            pickupTime=""
+            status=""
+            image=""
+            specialInstructions=""
+          />
+        ))}
       </div>
     </div>
   );

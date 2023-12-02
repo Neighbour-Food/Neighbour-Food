@@ -3,40 +3,40 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 interface OrderData {
   pickUpTime: number;
-  foodItem : string;
+  foodItem: string;
   nstructions: string;
 }
 
 interface UserState {
-  isSignedIn: boolean,
-  isLoading: boolean,
-  createOrderTab: string,
-  orderScreen: string,
-  category: string,
-  username: string,
-  formData: any,
-  loginData: any,
-  address: string,
-  imgFile: any,
-  orderInput: any,
-  orderData: OrderData[]
-  orgName: string
+  isSignedIn: boolean;
+  isLoading: boolean;
+  createOrderTab: string;
+  orderScreen: string;
+  category: string;
+  username: string;
+  formData: any;
+  loginData: any;
+  address: string;
+  imgFile: any;
+  orderInput: any;
+  orderData: OrderData[];
+  orgName: string;
 }
 
 const initialState: UserState = {
   isSignedIn: false,
   isLoading: false,
-  createOrderTab: 'entry',
-  orderScreen: '',
-  category: 'NON-PROFIT',
-  username: '',
+  createOrderTab: "entry",
+  orderScreen: "",
+  category: "NON-PROFIT",
+  username: "",
   formData: {},
   loginData: {},
-  address: '',
+  address: "",
   imgFile: {},
   orderInput: {},
-  orderData: []
-orgName: "Very Good Org"
+  orderData: [],
+  orgName: "Very Good Org",
 };
 
 const userSlice = createSlice({
@@ -82,9 +82,19 @@ const userSlice = createSlice({
   },
 });
 
-
-export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData, setOrgName } = userSlice.actions;
+export const {
+  changeIsSignedIn,
+  setCategory,
+  setFormData,
+  setLoginData,
+  setIsLoading,
+  setUsername,
+  setCreateOrderTab,
+  setOrderScreen,
+  setImgFile,
+  setOrderInput,
+  setOrderData,
+  setOrgName,
+} = userSlice.actions;
 
 export default userSlice.reducer;
-
-
