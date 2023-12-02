@@ -1,4 +1,5 @@
 const db = require('../db/sqlmodel');
+const distanceDifference = require('../util/distances');
 const mealController = {};
 
 mealController.getMeals = async (req, res, next) => {
@@ -47,9 +48,6 @@ mealController.getAvailableMeals = async (req, res, next) => {
     }
   
     state = state.trim();
-  
-    const restWithinStateQuery = 'SELECT id, longitude, latitude FROM restaurants WHERE state = $1';
-    const restWithinState = await db.query(restWithinStateQuery, [state]);
   
     let withinDistance;
   
