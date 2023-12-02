@@ -14,7 +14,6 @@ const Navbar: FC = () => {
         const newCategory = event.target.value;
         dispatch(setCategory(newCategory));
     };
-    
     return (
         <>
             {category === 'NON-PROFIT'

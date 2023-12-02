@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { RootState } from "../state/store";
+
 import { setFormData } from "../state/user/userSlice";
 import { useSelector, useDispatch } from "react-redux/";
 
@@ -24,7 +25,6 @@ const Autocomplete = () => {
         ...formData,
         address: results[0].formatted_address,
       }));
-
     } catch (error) {
       console.error('Error fetching geolocation:', error);
     }

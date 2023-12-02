@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FC, ReactHTMLElement, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+
 import { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
@@ -9,6 +10,7 @@ import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Autocomplete from '../Autocomplete';
+
 import IsLoading from "../IsLoading";
 
 interface SuccessResponse {
@@ -27,6 +29,7 @@ type MyResponse = SuccessResponse | ErrorResponse;
 const Signup: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
 
 
   // Var for user states
@@ -87,6 +90,7 @@ const Signup: FC = () => {
     }
   };
 
+
   if (isLoading) {
     return (
       <>
@@ -105,6 +109,7 @@ const Signup: FC = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange} />
             <h3>CONTACT INFO</h3>
+
             <label htmlFor="org">Name of Org</label>
             <input type="text" name="org" onChange={handleInputChange} />
             <label htmlFor="contact">Contact Name</label>

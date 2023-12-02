@@ -19,8 +19,6 @@ interface ErrorResponse {
 }
 
 type MyResponse = SuccessResponse | ErrorResponse;
-
-
 const Login: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
