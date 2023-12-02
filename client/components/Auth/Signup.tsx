@@ -5,7 +5,7 @@ import axios from 'axios';
 import { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setFormData, setIsLoading, setUsername } from "../../state/user/userSlice";
+import { changeIsSignedIn, setFormData, setIsLoading, setUsername, setId } from "../../state/user/userSlice";
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
@@ -36,25 +36,28 @@ const Signup: FC = () => {
   const category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
-  // const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector((state: RootState) => state.user.username);
+  const id = useSelector((state: RootState) => state.user.id);
   // console.log(formData)
 
 
   //function to handle user data and update state with redux
   const handleInputChange = (event: any) => { // H E L P
     const { name, value } = event.target
-    if (!formData.category) {
+    // if (!formData.category) {
+    //   dispatch(setFormData({
+    //     ...formData,
+    //     category: category,
+    //     [name]: value
+    //   }))
+    // } else {
       dispatch(setFormData({
         ...formData,
         category: category,
         [name]: value
-      }))
-    } else {
-      dispatch(setFormData({
-        ...formData,
-        [name]: value
-      }))
-    }
+      })
+      )
+    // }
   };
 
   //function to handle submit
@@ -72,13 +75,15 @@ const Signup: FC = () => {
       });
 
       if (request.data.status === 'success') {
+        console.log(request.data)
+        dispatch(setUsername(request.data.username));
+        dispatch(setId(request.data.id));
         // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
-        else navigate("/create-pickup")
+        else navigate("/create-order")
 
         dispatch(setIsLoading());
         dispatch(changeIsSignedIn())
-        dispatch(setUsername(request.data.username));
 
       } else {
         alert('please enter all information')

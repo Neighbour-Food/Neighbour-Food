@@ -14,6 +14,7 @@ interface UserState {
   orderScreen: string,
   category: string,
   username: string,
+  id: number,
   formData: any,
   loginData: any,
   address: string,
@@ -28,6 +29,7 @@ const initialState: UserState = {
   createOrderTab: 'entry',
   orderScreen: '',
   category: 'NON-PROFIT',
+  id: undefined,
   username: '',
   formData: {},
   loginData: {},
@@ -63,7 +65,10 @@ const userSlice = createSlice({
       state.loginData = action.payload;
     },
     setUsername: (state, action: any) => {
-      state.loginData = action.username;
+      state.loginData = action.payload;
+    },
+    setId: (state, action: any) => {
+      state.id = action.payload;
     },
     setImgFile: (state, action: any) => {
       state.imgFile = action.imgFile;
@@ -77,7 +82,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData } = userSlice.actions;
+export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData , setId} = userSlice.actions;
 
 export default userSlice.reducer;
 
