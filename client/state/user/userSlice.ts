@@ -20,6 +20,7 @@ interface UserState {
   imgFile: any,
   orderInput: any,
   orderData: OrderData[]
+  orgName: string
 }
 
 const initialState: UserState = {
@@ -35,6 +36,7 @@ const initialState: UserState = {
   imgFile: {},
   orderInput: {},
   orderData: []
+orgName: "Very Good Org"
 };
 
 const userSlice = createSlice({
@@ -74,10 +76,14 @@ const userSlice = createSlice({
     setOrderData: (state, action: PayloadAction<OrderData[]>) => {
       state.orderData = action.payload;
     },
+    setOrgName: (state, action: any) => {
+      state.orgName = action.payload;
+    },
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData } = userSlice.actions;
+
+export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData, setOrgName } = userSlice.actions;
 
 export default userSlice.reducer;
 
