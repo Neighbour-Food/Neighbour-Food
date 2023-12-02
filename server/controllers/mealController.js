@@ -7,7 +7,7 @@ mealController.getMeals = async (req, res, next) => {
     const { rest_id } = req.params; //ensure the get request includes rest_id as param
 
     const restmeals =
-      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1';
+      'SELECT m.body_text, m.categories, m.quantity, m.headline, m.pickup_start, m.pickup_end, m.created_at, m.status, m.img_url FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1';
     const results = await db.query(restmeals, [rest_id]);
 
     if (!results.rows) {
@@ -174,13 +174,14 @@ mealController.postMeal = async (req, res, next) => {
 
     req.body.orderData.forEach(async(order) => {
       const addMealQuery =
-        'INSERT INTO meals(rest_id, body_text, headline, pickup_start, pickup_end) VALUES($1, $2, $3, $4, $5)';
+        'INSERT INTO meals(rest_id, body_text, headline, pickup_start, pickup_end, img_url) VALUES($1, $2, $3, $4, $5, $6)';
       await db.query(addMealQuery, [
         req.body.rest_id,
         order.instructions,
         order['food-item'],
         order['pick-up-time'],
-        order['pick-up-end']
+        order['pick-up-end'],
+        req.body.img_url
       ]);
 
     })
@@ -242,7 +243,7 @@ mealController.getRestAndAvailableMeals = async (req, res, next) => {
       
       availableMeals = await Promise.all(withinDistance.map(
         async (rest_id) => {
-          const availMealQuery = 'SELECT m.body_text, m.headline, m.pickup_start, m.pickup_end, m.status, m.rest_id FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
+          const availMealQuery = 'SELECT m.body_text, m.headline, m.pickup_start, m.pickup_end, m.status, m.rest_id, m.img_url FROM restaurant r JOIN meals m on r.id = m.rest_id WHERE r.id = $1 AND m.status = $2';
           const availMeal = await db.query(availMealQuery, [rest_id, 'available']);
           if(availMeal.rows.length > 0) {
             return availMeal.rows

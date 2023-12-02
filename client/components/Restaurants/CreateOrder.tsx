@@ -79,6 +79,9 @@ const CreateOrder: FC = () => {
       // return;
     }
 
+    let url:any;
+    let newUrl:any;
+
     try {
       // server req for signed url
       const signedUrlResponse = await axios.post('http://localhost:4000/generate-signed-url', {
@@ -95,6 +98,10 @@ const CreateOrder: FC = () => {
       });
 
       console.log('Image uploaded successfully');
+      url = signedUrl[0];
+      newUrl= 'https://storage.cloud.google.com/restaurantimageslogos/' + url.slice(53,103);
+      console.log('signed Url', signedUrl);
+      console.log('image file: ', imgFile)
     } catch (error) {
       alert('File not uploaded')
       console.error('Error uploading file:', error.message);
@@ -105,7 +112,8 @@ const CreateOrder: FC = () => {
       // server req for posting meal
       const request: any = await axios.post('http://localhost:4000/api/meals/postMeal', {
         orderData,
-        rest_id: id
+        rest_id: id,
+        img_url: newUrl
       });
 
       if (request.data.status === 'success') {
