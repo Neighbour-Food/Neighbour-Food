@@ -80,24 +80,105 @@ mealController.getAvailableMeals = async (req, res, next) => {
  
 };
 
-// update a meal status (claim / unclaim ) by npo 
-
-// restuarant edit entire meal   by rest
-
-
-  // posting meals
-  mealController.postMeal = async (req, res, next) => {
-    console.log('meals');
-    // query the db with the current user's (restaurant's) email and get the id in the users table based off their email
-    const findRestQuery = 'SELECT id FROM restaurants WHERE email=$1';
-    const foundRestID = await db.query(findRestQuery, [req.body.rest_id]);
+// update a meal status claim by npo 
+mealController.claimMeal = async (req, res, next) => {
   
-    if (!foundRestID.rowCount) {
-      return next('No id found in the restaurants table');
-    }
-    // use that id found, and insert meal details
+  const { npo_id , meal_id } = req.body;
+  
+  try {
+    const updateQuery = 'UPDATE meals SET npo_id = $1, status = $2 WHERE id = $3';
+    await db.query(updateQuery, [npo_id, 'not available', meal_id]);
+
+    res.status(201).json({
+      status: 'success',
+    })
+
+  } catch (err){
+    next(err)
+  }
+}
+
+// update a meal status unclaim by npo 
+mealController.unclaimMeal = async (req, res, next) => {
+  
+  const { meal_id } = req.body;
+  
+  try {
+    const updateQuery = 'UPDATE meals SET status = $1, npo_id = $2 WHERE id = $3';
+    await db.query(updateQuery, ['available', null, meal_id]);
+
+    res.status(201).json({
+      status: 'success',
+    })
+
+  } catch (err){
+    next(err)
+  }
+
+}
+
+// restuarant edit entire meal by rest
+mealController.editMeal = async (req, res, next) => {
+
+  // coordinate with frontend to send everything to backend, even whats not being changed
+
+  const editMealQuery =
+  'UPDATE meals SET body_text = $1, categories = $2, quantity = $3, headline = $4, pickup_start = $5, pickup_end = $6) WHERE id = $7';
+
+  await db.query(editMealQuery, [
+    req.body.body_text,
+    req.body.categories,
+    req.body.quantity,
+    req.body.headline,
+    req.body.pickup_start,
+    req.body.pickup_end,
+    req.body.meal_id
+  ]);
+
+  res.status(201).json({
+    status: 'success',
+  })
+
+  try {
+
+
+  } catch (err){
+    next(err)
+  }
+
+}
+
+// restuarant remove meal
+mealController.removeMeal = async (req, res, next) => {
+
+  try {
+    const removeMealQuery =
+    'DELETE FROM meals WHERE id = $1';
+    
+    await db.query(removeMealQuery, [
+      req.body.meal_id
+    ]);
+  
+    res.status(201).json({
+      status: 'success',
+    })
+    
+  } catch (err){
+    next(err)
+  }
+
+}
+
+
+// posting meals
+mealController.postMeal = async (req, res, next) => {
+  
+  const foundRestID = await db.query(findRestQuery, [req.body.rest_id]);
+
+  try {
+
     const addMealQuery =
-      'INSERT INTO meals(rest_id, body_text, categories, quantity, headline, pickup_start, pickup_end, created_at, status) VALUES($1, $2, $3, $4, $5, $6, $7, $8,  $9)';
+      'INSERT INTO meals(rest_id, body_text, categories, quantity, headline, pickup_start, pickup_end) VALUES($1, $2, $3, $4, $5, $6, $7)';
     await db.query(addMealQuery, [
       foundRestID.rows[0].id,
       req.body.body_text,
@@ -105,11 +186,17 @@ mealController.getAvailableMeals = async (req, res, next) => {
       req.body.quantity,
       req.body.headline,
       req.body.pickup_start,
-      req.body.pickup_end,
-      req.body.created_at,
-      req.body.status
+      req.body.pickup_end
     ]);
-    return next();
-  };
-  
-  module.exports = mealController;
+
+    res.status(201).json({
+      status: 'success',
+    })
+
+  } catch (err) {
+    next(err)
+  }
+
+};
+
+module.exports = mealController;
