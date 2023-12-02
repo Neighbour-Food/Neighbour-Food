@@ -4,11 +4,12 @@ const getCoordsForAddress = require('../util/location.js')
 
 exports.signup = async (req, res, next) => {
   try {
-    console.log(req.body)
-    const { category, name, username, password, street, city, state, zip, phonenumber, email, address} = req.body.formData;
+
+    let { category, org , contact, username, password, phone, email, address} = req.body.formData;
 
     // logic to get the long and latitude (to be modularized function incase they change locations)
     const coordsFetched = await getCoordsForAddress(address);
+    const state = address.slice(-13,-11);
 
     const longitude = coordsFetched.lng;
     const latitude = coordsFetched.lat;
@@ -17,16 +18,19 @@ exports.signup = async (req, res, next) => {
     let queryStrCreate;
 
     if (category == 'NON-PROFIT'){ //non-profit
-        const { pref_distance } = req.body;
+        const { pickup } = req.body.formData;
 
         hashed = await bcrypt.hash(password, 10);
-        queryStrCreate = `INSERT INTO npos (name, username, password, street, city, state, zip, phonenumber, email, longitude, latitude,pref_distance) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}', '${zip}', '${phonenumber}', '${email}', '${longitude}', '${latitude}', '${pref_distance}');`;
+        queryStrCreate = `INSERT INTO npos (name, org, username, password, state, address, phonenumber, email, longitude, latitude, pref_distance) VALUES ('${contact}', '${org}', '${username}', '${hashed}', '${state}', '${address}', ${phone}, '${email}', '${longitude}', '${latitude}', ${Number(pickup)});`;
+
+        category = 'npos';
     } else { //restaurant
-        // let { type } = req.body; 
         hashed = await bcrypt.hash(password, 10);
-        queryStrCreate = `INSERT INTO restaurant (name, username, password, street, city, zip, phonenumber, email) VALUES ('${name}', '${username}', '${hashed}', '${street}',  '${city}',' ${state}',  '${zip}', '${phonenumber}', '${email}');`;
+        queryStrCreate = `INSERT INTO restaurant (name, org, username, password, state, address, phonenumber, email, longitude, latitude) VALUES ('${contact}', '${org}', '${username}', '${hashed}', '${state}', '${address}', ${phone}, '${email}', '${longitude}', '${latitude}');`;
+        category = 'restaurant';
     }
-     
+
+   
     await db.query(queryStrCreate);
     const queryStrRetrieve = `SELECT * FROM ${category} WHERE username = '${username}' ;`;
     const result = await db.query(queryStrRetrieve);
@@ -35,7 +39,8 @@ exports.signup = async (req, res, next) => {
 
     res.status(201).json({
       status: 'success',
-      id: result.rows[0].id,
+      username: result.rows[0].username,
+      id: result.rows[0].id
     });
   } catch (err) {
     next(err);
@@ -44,20 +49,23 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const { category, username, password } = req.body;
+    let { category, username, password } = req.body.loginData;
+
+    if (category === 'NON-PROFIT'){ //non-profit
+      category = 'npos';
+  } else { //restaurant
+      category = 'restaurant';
+  }
 
     const queryStr = `SELECT * FROM ${category} WHERE username = '${username}';`;
     const result = await db.query(queryStr);
     const loginCheck = await bcrypt.compare(password, result.rows[0].password);
 
     if (loginCheck) {
-    //   db.query(updateLoginQuery);
-
-    // what do we want to send back?
-
-      res.status(200).json({
+      res.status(201).json({
         status: 'success',
-        user: result.rows[0].id,
+        username: result.rows[0].username,
+        id: result.rows[0].id
       });
     } else {
       next('username or password is incorrect');

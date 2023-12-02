@@ -29,6 +29,7 @@ const CreateOrder: FC = () => {
   const orderInput = useSelector((state: RootState) => state.user.orderInput);
   const orderData = useSelector((state: RootState) => state.user.orderData);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  const id = useSelector((state: RootState) => state.user.id);
 
 
 
@@ -103,7 +104,8 @@ const CreateOrder: FC = () => {
     try {
       // server req for posting meal
       const request: any = await axios.post('http://localhost:4000/api/meals/postMeal', {
-        orderData
+        orderData,
+        rest_id: id
       });
 
       if (request.data.status === 'success') {
@@ -147,8 +149,14 @@ const CreateOrder: FC = () => {
             <>
               <form onSubmit={handleUpload}>
                 <h2></h2>
-                <label htmlFor="pick-up-time">Pick up time</label>
-                <input type="text" name="pick-up-time" onChange={handleInputChange} className="border-bottom" />
+                <div>
+                <label htmlFor="pick-up-start">Pick up start</label>
+                  <input type="text" name="pick-up-time" onChange={handleInputChange} className="border-bottom" />
+                  <label htmlFor="pick-up-end">Pick up end</label>
+                  <input type="text" name="pick-up-end" onChange={handleInputChange} className="border-bottom" />
+                </div>
+                {/* <label htmlFor="pick-up-time">Pick up time</label>
+                <input type="text" name="pick-up-time" onChange={handleInputChange} className="border-bottom" /> */}
                 <div className="add-bottom-border"></div>
                 {/* <div className="food-item">
                   <label htmlFor="food-item">Food item #1</label>

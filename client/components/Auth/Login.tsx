@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setCategory, setLoginData, setIsLoading, setUsername } from "../../state/user/userSlice";
+import { changeIsSignedIn, setCategory, setLoginData, setIsLoading, setUsername, setId } from "../../state/user/userSlice";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 
@@ -24,25 +24,25 @@ const Login: FC = () => {
   const navigate = useNavigate();
 
   // Var for restaurant or NPO category
-  const category = useSelector((state: RootState) => state.user.category);
+  let category = useSelector((state: RootState) => state.user.category);
   const loginData = useSelector((state: RootState) => state.user.loginData);
   const isLoading = useSelector((state: RootState) => state.user.isLoading);
 
   //function to handle change and update state with redux
   const handleInputChange = (event: any) => { // H E L P
     const { name, value } = event.target
-    if (!loginData.category) {
+    // if (!loginData.category) {
+    //   dispatch(setLoginData({
+    //     ...loginData,
+    //     category: category,
+    //     [name]: value
+    //   }))
+    // } else {
       dispatch(setLoginData({
         ...loginData,
-        category: category,
         [name]: value
       }))
-    } else {
-      dispatch(setLoginData({
-        ...loginData,
-        [name]: value
-      }))
-    }
+    // }
   };
 
   //function to handle submit
@@ -60,12 +60,15 @@ const Login: FC = () => {
 
       if (request.data.status === 'success') {
         // console.log('request: ', request)
-        if (category === 'NON_PROFIT') navigate("/feed")
-        else navigate("/create-pickup")
+        dispatch(setUsername(request.data.username));
+        dispatch(setId(request.data.id));
+        if (category === 'NON-PROFIT') navigate("/feed")
+        else navigate("/create-order")
 
         dispatch(setIsLoading());
         dispatch(changeIsSignedIn())
-        dispatch(setUsername(request.data.username));
+        // dispatch(setUsername(request.data.username));
+        // dispatch(setId(request.data.Id));
 
       } else {
         alert('please enter all information')

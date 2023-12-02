@@ -2,3 +2,4 @@
 *.env
 node_modules
 .DS_Store
+server/empirical-radio-406002-62edab3ef56a.json
