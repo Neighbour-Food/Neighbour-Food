@@ -1,36 +1,46 @@
 import React, { ChangeEvent, FC, ReactHTMLElement, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+
+import { AxiosResponse } from 'axios';
 import { useSelector, useDispatch } from "react-redux/";
 import { RootState } from "../../state/store";
-import { changeIsSignedIn, setCategory, setFormData } from "../../state/user/userSlice";
+import { changeIsSignedIn, setFormData, setIsLoading, setUsername } from "../../state/user/userSlice";
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
 import Sidebar from "../Sidebar";
 import Navbar from "../Navbar";
 import Autocomplete from '../Autocomplete';
 
-// const YourMainComponent = () => {
-const handleLocationSelect = (latLng) => {
-  console.log('Selected Location:', latLng);
-  // Do something with the selected location, e.g., update state
-};
-// }
+import IsLoading from "../IsLoading";
+
+interface SuccessResponse {
+  status: 'Success';
+  // data: /* your specific data type */;
+}
+
+interface ErrorResponse {
+  status: 'Denied';
+  error: string;
+}
+
+type MyResponse = SuccessResponse | ErrorResponse;
+
 
 const Signup: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
 
-  // Array for all states to display as select options
-  const states = ["", "AK - Alaska", "AL - Alabama", "AR - Arkansas", "AS - American Samoa", "AZ - Arizona", "CA - California", "CO - Colorado", "CT - Connecticut", "DC - District of Columbia", "DE - Delaware", "FL - Florida", "GA - Georgia", "GU - Guam", "HI - Hawaii", "IA - Iowa", "ID - Idaho", "IL - Illinois", "IN - Indiana", "KS - Kansas", "KY - Kentucky", "LA - Louisiana", "MA - Massachusetts", "MD - Maryland", "ME - Maine", "MI - Michigan", "MN - Minnesota", "MO - Missouri", "MS - Mississippi", "MT - Montana", "NC - North Carolina", "ND - North Dakota", "NE - Nebraska", "NH - New Hampshire", "NJ - New Jersey", "NM - New Mexico", "NV - Nevada", "NY - New York", "OH - Ohio", "OK - Oklahoma", "OR - Oregon", "PA - Pennsylvania", "PR - Puerto Rico", "RI - Rhode Island", "SC - South Carolina", "SD - South Dakota", "TN - Tennessee", "TX - Texas", "UT - Utah", "VA - Virginia", "VI - Virgin Islands", "VT - Vermont", "WA - Washington", "WI - Wisconsin", "WV - West Virginia", "WY - Wyoming"]
 
-  // Var for restaurant or NPO category
+  // Var for user states
   const category = useSelector((state: RootState) => state.user.category);
   const formData = useSelector((state: RootState) => state.user.formData);
+  const isLoading = useSelector((state: RootState) => state.user.isLoading);
+  // const username = useSelector((state: RootState) => state.user.username);
   // console.log(formData)
 
 
-  //function to handle change and update state with redux
+  //function to handle user data and update state with redux
   const handleInputChange = (event: any) => { // H E L P
     const { name, value } = event.target
     if (!formData.category) {
@@ -52,15 +62,26 @@ const Signup: FC = () => {
     event.preventDefault();
     console.log('submit: ', formData)
 
+
     // POST REQUEST
     try {
-      const request = await axios.post('http://localhost:4000/api/users/signup', {
+      dispatch(setIsLoading());
+
+      const request: any = await axios.post('http://localhost:4000/api/users/signup', {
         formData
       });
 
-      if (request) { // CHECK WITH BACKEND 
+      if (request.data.status === 'success') {
+        // console.log('request: ', request)
         if (category === 'NON_PROFIT') navigate("/feed")
         else navigate("/create-pickup")
+
+        dispatch(setIsLoading());
+        dispatch(changeIsSignedIn())
+        dispatch(setUsername(request.data.username));
+
+      } else {
+        alert('please enter all information')
       }
 
     }
@@ -70,11 +91,14 @@ const Signup: FC = () => {
   };
 
 
-
-  return (
+  if (isLoading) {
+    return (
+      <>
+        <IsLoading />
+      </>)
+  } else return (
     <>
       <div className="signup">
-        {/* <Produce /> */}
         <Sidebar />
         <section className="hero">
           <Navbar />
@@ -85,41 +109,17 @@ const Signup: FC = () => {
             <label htmlFor="password">Password</label>
             <input type="password" name="password" onChange={handleInputChange} />
             <h3>CONTACT INFO</h3>
-            {/* <div className="org-name"> */}
-            {/* <div className="column"> */}
+
             <label htmlFor="org">Name of Org</label>
             <input type="text" name="org" onChange={handleInputChange} />
-            {/* </div>
-              <div> */}
             <label htmlFor="contact">Contact Name</label>
             <input type="text" name="contact" onChange={handleInputChange} />
-            {/* </div> */}
-            {/* </div> */}
             <label htmlFor="email">Email</label>
             <input type="text" name="email" onChange={handleInputChange} />
             <label htmlFor="phone">Phone Number</label>
             <input type="text" name="phone" onChange={handleInputChange} />
-            <label htmlFor="phone">Phone Number</label>
-            <input type="text" name="phone" onChange={handleInputChange} />
             <label htmlFor="street">Street Adress</label>
-            <Autocomplete onSelect={handleLocationSelect} />
-            {/* <input type="text" name="street" onChange={handleInputChange} /> */}
-            {/* <div className="address"> */}
-            {/* <div>
-                <label htmlFor="city">City</label>
-                <input type="text" name="city" value={''} onChange={handleInputChange} />
-              </div> */}
-            {/* <div>
-                <label htmlFor="contact">State</label>
-                <select className="state" name="state" onChange={handleInputChange}>
-                  {states.map((state) => <option value={state} key={state}>{state}</option>)}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="zip">Zip</label>
-                <input type="text" name="zip" value={''} onChange={handleInputChange} />
-              </div> */}
-            {/* </div> */}
+            <Autocomplete />
             {category === 'NON-PROFIT' &&
               <>
                 <label htmlFor="pickup">Pick Up Radius</label>
