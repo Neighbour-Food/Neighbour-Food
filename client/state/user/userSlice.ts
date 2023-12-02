@@ -1,30 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
 
+interface OrderData {
+  pickUpTime: number;
+  foodItem : string;
+  nstructions: string;
+}
 
 interface UserState {
   isSignedIn: boolean,
+  isLoading: boolean,
+  createOrderTab: string,
+  orderScreen: string,
   category: string,
-  // formData: {
-  // name: string,
-  // paswword: string
-  // }, // H E L P
+  username: string,
   formData: any,
   loginData: any,
-  address : string,
+  address: string,
+  imgFile: any,
+  orderInput: any,
+  orderData: OrderData[]
   orgName: string
 }
 
 const initialState: UserState = {
   isSignedIn: false,
+  isLoading: false,
+  createOrderTab: 'entry',
+  orderScreen: '',
   category: 'NON-PROFIT',
-  formData: {
-    // name: '',
-    // paswword: ''
-  },
+  username: '',
+  formData: {},
   loginData: {},
-  address : '',
-  orgName: "Very Good Org"
+  address: '',
+  imgFile: {},
+  orderInput: {},
+  orderData: []
+orgName: "Very Good Org"
 };
 
 const userSlice = createSlice({
@@ -33,6 +45,15 @@ const userSlice = createSlice({
   reducers: {
     changeIsSignedIn: (state) => {
       state.isSignedIn = !state.isSignedIn;
+    },
+    setIsLoading: (state) => {
+      state.isLoading = !state.isLoading;
+    },
+    setCreateOrderTab: (state, action) => {
+      state.createOrderTab = action.payload;
+    },
+    setOrderScreen: (state, action) => {
+      state.orderScreen = action.payload;
     },
     setCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
@@ -43,8 +64,17 @@ const userSlice = createSlice({
     setLoginData: (state, action: any) => {
       state.loginData = action.payload;
     },
-    setAddress: (state, action: any) => {
-      state.loginData = action.address;
+    setUsername: (state, action: any) => {
+      state.loginData = action.username;
+    },
+    setImgFile: (state, action: any) => {
+      state.imgFile = action.imgFile;
+    },
+    setOrderInput: (state, action: any) => {
+      state.orderInput = action.payload;
+    },
+    setOrderData: (state, action: PayloadAction<OrderData[]>) => {
+      state.orderData = action.payload;
     },
     setOrgName: (state, action: any) => {
       state.orgName = action.payload;
@@ -52,7 +82,8 @@ const userSlice = createSlice({
   },
 });
 
-export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setAddress, setOrgName } = userSlice.actions;
+
+export const { changeIsSignedIn, setCategory, setFormData, setLoginData, setIsLoading, setUsername, setCreateOrderTab, setOrderScreen, setImgFile, setOrderInput,setOrderData, setOrgName } = userSlice.actions;
 
 export default userSlice.reducer;
 
