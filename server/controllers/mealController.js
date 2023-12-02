@@ -1,4 +1,5 @@
 const db = require('../db/sqlmodel');
+const distanceDifference = require('../util/distances');
 const mealController = {};
 
 mealController.getMeals = async (req, res, next) => {

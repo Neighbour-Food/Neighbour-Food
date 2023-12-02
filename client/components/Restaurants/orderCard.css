@@ -1,0 +1,52 @@
+.order-card {
+  width: 288px;
+  height: 130px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid rgba(18, 34, 62, 0.3);
+  background: #12223e;
+  display: grid;
+
+}
+
+.order-card-title {
+  margin: 20px 0 5px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Outfit;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 170%; /* 20.4px */
+  letter-spacing: 0.36px;
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+.order-card-special-instructions {
+  margin: 0 0 5px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: Outfit;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 14px */
+  letter-spacing: 0.3px;
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+.order-card-checkbox {
+  width: 24px;
+  height: 24px;
+  margin-left: 20px;
+  grid-area: 3 / 1 / 4 / 2;
+}
+
+.order-card-img {
+  width: 91px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 8px;
+  grid-area: 1 / 2 / 4 / 3;
+}
+.order-text {
+  margin-right: 3px;
+}
