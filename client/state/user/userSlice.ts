@@ -32,7 +32,7 @@ const initialState: UserState = {
   formData: {},
   loginData: {},
   address: '',
-  imgFile: undefined,
+  imgFile: {},
   orderInput: {},
   orderData: []
 };

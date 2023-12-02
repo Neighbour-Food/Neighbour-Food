@@ -15,6 +15,7 @@ const CreateOrder: FC = () => {
   const navigate = useNavigate();
 
   const [imgFile, setImgFile] = useState(null);
+  const [indices, setIndices] = useState([1]);
   // const [signedUrl, setSignedUrl] = useState(null);
 
   const username = useSelector((state: RootState) => state.user.username);
@@ -41,12 +42,12 @@ const CreateOrder: FC = () => {
     dispatch(setOrderInput(
       { ...orderInput, [name]: value }
     ))
-    console.log('orderInput :', orderInput)
+    // console.log('orderInput :', orderInput)
   };
 
   const handleFileChange = (event: any) => {
     const selectedFile = event.target.files[0];
-    console.log('selectedFile: ', selectedFile)
+    // console.log('selectedFile: ', selectedFile)
     // dispatch(setImgFile(selectedFile));
     setImgFile(selectedFile)
   };
@@ -55,15 +56,21 @@ const CreateOrder: FC = () => {
     dispatch(setOrderData([]));
   }
 
-  const handleAddItem = (event: any) => {
+  const handleAdd = (event: any) => {
     console.log('orderInput :', orderInput)
     dispatch(setOrderData([...orderData, orderInput]))
+    console.log('orderData :', orderData)
+  }
+
+  const handleAddItem = (event: any) => {
+    // console.log('orderInput :', orderInput)
+    setIndices([...indices, indices[indices.length-1]+1])
   }
 
   const handleUpload = async (event: any) => {
     event.preventDefault();
     dispatch(setIsLoading());
-    
+    console.log('orderData :', orderData)
 
     if (!imgFile) {
       console.error('No image selected');
@@ -87,13 +94,13 @@ const CreateOrder: FC = () => {
 
       console.log('Image uploaded successfully');
     } catch (error) {
-      // alert('File not uploaded')
+      alert('File not uploaded')
       console.error('Error uploading file:', error.message);
     }
 
+   
     try {
       // server req for posting meal
-      console.log('orderData :', orderData)
       const request: any = await axios.post('http://localhost:4000/api/meals/postMeal', {
         orderData
       });
@@ -102,6 +109,7 @@ const CreateOrder: FC = () => {
         navigate("/create-order")
         dispatch(setIsLoading());
         dispatch(setCreateOrderTab('history'))
+        dispatch(setOrderData([]))
       } else {
         alert('please enter all information')
       }
@@ -141,27 +149,29 @@ const CreateOrder: FC = () => {
                 <label htmlFor="pick-up-time">Pick up time</label>
                 <input type="text" name="pick-up-time" onChange={handleInputChange} className="border-bottom" />
                 <div className="add-bottom-border"></div>
-                <div className="food-item">
+                {/* <div className="food-item">
                   <label htmlFor="food-item">Food item #1</label>
                   <input type="text" name="food-item" onChange={handleInputChange} className="border-bottom" />
                   <label htmlFor="img-upload">Upload image</label>
                   <input type="file" name="img-upload" onChange={handleFileChange} className="border-bottom" />
                   <label htmlFor="instructions">Special instructions</label>
                   <input type="text" name="instructions" onChange={handleInputChange} className="border-bottom" />
-                </div>
-                {orderData.map((order, index) => {
+                  <button className="black-button" type="button" onClick={handleAddItem}>Add</button>
+                </div> */}
+                {indices.map((index) => {
                   return (
                     <div className="food-item" key={index}>
-                      <label htmlFor="food-item">Food item #{index + 2}</label>
+                      <label htmlFor="food-item">Food item #{index}</label>
                       <input type="text" name="food-item" onChange={handleInputChange} className="border-bottom" />
                       <label htmlFor="img-upload">Upload image</label>
                       <input type="file" name="img-upload" onChange={handleFileChange} className="border-bottom" />
                       <label htmlFor="instructions">Special instructions</label>
                       <input type="text" name="instructions" onChange={handleInputChange} className="border-bottom" />
+                      <button className="black-button" type="button" onClick={handleAdd}>Add Item</button>
                     </div>
                   )
                 })}
-                <button className="white-button" type="button" onClick={handleAddItem}>ADD ITEM</button>
+                <button className="white-button" type="button" onClick={handleAddItem}>More</button>
                 <div className="buttons">
                   <button className="white-button" type="button" onClick={handleCancel}>Cancel</button>
                   <button className="black-button" type="submit">Post</button>
