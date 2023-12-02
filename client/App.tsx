@@ -17,7 +17,7 @@ const App: FC = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/History" element={<History />} />
+          <Route path="/history" element={<History />} />
           <Route path="/create-order" element={<CreateOrder/>} />
           <Route path="/create-pickup" element={<CreatePickup />} />
         </Routes>

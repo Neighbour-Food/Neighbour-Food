@@ -1,8 +1,6 @@
 const db = require('../db/sqlmodel');
-const distanceDifference = require('../util/distances');
 const mealController = {};
 
-// getting meals (restaurant side) 
 mealController.getMeals = async (req, res, next) => {
   try{
     const { rest_id } = req.params; //ensure the get request includes rest_id as param
