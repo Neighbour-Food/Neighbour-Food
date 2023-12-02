@@ -1,8 +1,6 @@
 const db = require('../db/sqlmodel');
-const distanceDifference = require('../util/distances');
 const mealController = {};
 
-// getting meals (restaurant side) 
 mealController.getMeals = async (req, res, next) => {
   try{
     const { rest_id } = req.params; //ensure the get request includes rest_id as param
@@ -87,7 +85,7 @@ mealController.getAvailableMeals = async (req, res, next) => {
 
   // posting meals
   mealController.postMeal = async (req, res, next) => {
-    console.log('meals');
+    console.log('meals: ', req.body);
     // query the db with the current user's (restaurant's) email and get the id in the users table based off their email
     const findRestQuery = 'SELECT id FROM restaurants WHERE email=$1';
     const foundRestID = await db.query(findRestQuery, [req.body.rest_id]);
@@ -109,6 +107,7 @@ mealController.getAvailableMeals = async (req, res, next) => {
       req.body.created_at,
       req.body.status
     ]);
+  
     return next();
   };
   

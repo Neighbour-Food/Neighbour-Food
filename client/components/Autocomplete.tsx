@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { RootState } from "../state/store";
-import { setFormData, setAddress } from "../state/user/userSlice";
+
+import { setFormData } from "../state/user/userSlice";
 import { useSelector, useDispatch } from "react-redux/";
 
-const Autocomplete = ({ onSelect }) => {
+const Autocomplete = () => {
   const dispatch = useDispatch();
   const formData = useSelector((state: RootState) => state.user.formData);
   // const address = useSelector((state: RootState) => state.user.address);
@@ -24,9 +25,6 @@ const Autocomplete = ({ onSelect }) => {
         ...formData,
         address: results[0].formatted_address,
       }));
-
-      const latLng = await getLatLng(results[0]);
-      onSelect(latLng);
     } catch (error) {
       console.error('Error fetching geolocation:', error);
     }
