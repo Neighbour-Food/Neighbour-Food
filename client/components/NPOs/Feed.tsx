@@ -13,18 +13,18 @@ const Feed: FC = () => {
   return (
     <>
       <div className="feed">
-        {/* <Sidebar /> */}
+        <Sidebar />
         <div className="npo-feed">
-          {/* <nav>
-          <button type="button">
-          <PersonIcon />
-          </button>
-        </nav> */}
-          {/* <h1>
-            Hi {orgName},<br />
-            <span> 3 restaurants</span> are ready for pick up
-          </h1>
-          <NpoFeedImage /> */}
+          <div>
+            <h1>
+              Hi {orgName},<br />
+              <span> 3 restaurants</span> are ready <br />for pick up
+              <br />
+            </h1>
+            <div className="npo-feed-image">
+              <NpoFeedImage />
+            </div>
+          </div>
           <OrdersList />
         </div>
       </div>

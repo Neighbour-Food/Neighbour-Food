@@ -1,25 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import OrderCard from "../Restaurants/OrderCard";
 
 export interface AccordionProps {
-  title: any;
-  content: any;
-  pickupTime: any;
-  status: any;
-  food: any;
+  name: string;
+  title: string;
+  pickupTime: string;
+  status: string;
+  image: string;
+  specialInstructions: string;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, content, pickupTime, status, food }) => {
+const Accordion: React.FC<AccordionProps> = ({
+  name,
+  title,
+  pickupTime,
+  status,
+  image,
+  specialInstructions,
+}) => {
   const [isActive, setIsActive] = useState(false);
 
   return (
     <div className="accordion-item">
       <div className="accordion-title" onClick={() => setIsActive(!isActive)}>
-        <div className='accordion-title-item'>{title}</div>
-        <div className='accordion-title-item'>{pickupTime}</div>
-        <div className='accordion-title-item'>{status}</div>
-        <div className='accordion-title-item'>{isActive ? '-' : '+'}</div>
+        <div className="accordion-title-item">{name}</div>
+        <div className="accordion-title-item">{pickupTime}</div>
+        <div className="accordion-title-item">{status}</div>
+        <div className="accordion-title-item">{isActive ? "-" : "+"}</div>
       </div>
-      {isActive && <div className="accordion-content">{content}</div>}
+      {isActive && (
+        <div className="accordion-content">
+          {
+            <OrderCard
+              title={title}
+              image={image}
+              specialInstructions={specialInstructions}
+            />
+          }
+        </div>
+      )}
     </div>
   );
 };
